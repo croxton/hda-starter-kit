@@ -1,0 +1,90 @@
+/* ============================================================================
+   app.scss
+   ========================================================================= */
+
+/**
+ * Styles used throughout the website.
+ * 
+ * @author: Mark Croxton, mcroxton@hallmark-design.co.uk
+ * @copyright: Hallmark Design
+ */
+
+/* Settings: global variables, config switches
+   ========================================================================== */
+
+
+/* Functions
+   ========================================================================== */
+
+
+/* Mixins
+   ========================================================================== */
+
+
+/* Base: styles for unclassed HTML elements
+   ========================================================================== */
+
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ *
+ * You can see the styles here:
+ * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+*/
+
+ @tailwind preflight;
+
+
+/* Vendor: third party components 
+   ========================================================================== */
+
+
+/* Objects reusable design patterns - e.g. grids, ratios, vertical flow
+   ========================================================================== */
+
+
+/* Components: implementation-specific pieces of UI
+   ========================================================================== */  
+
+ /**
+  * This injects any component classes registered by plugins.
+  */
+ @tailwind components;
+
+/**
+  * Add your own components here, e.g.:
+  * 
+  * @import "scss/components/buttons";
+  * @import "scss/components/forms";
+  */
+
+
+/* Layouts - layout skeletons for a specific context
+   ========================================================================== */
+
+
+
+/* Utils: utility and helper classes
+   ========================================================================== */  
+
+ /**
+  * This injects all of Tailwind's utility classes, generated based on your
+  * config file.
+  */
+ @tailwind utilities;
+ 
+ /**
+  * Here you would add any custom utilities you need that don't come out of the
+  * box with Tailwind.
+  *
+  * Example :
+  *
+  * .bg-pattern-graph-paper { ... }
+  * .skew-45 { ... }
+  *
+  * Or if using a preprocessor or `postcss-import`:
+  *
+  * @import "utilities/background-patterns";
+  * @import "utilities/skew-transforms";
+  */
+ 

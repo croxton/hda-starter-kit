@@ -1,0 +1,191 @@
+# #############################################################################
+# # GIT IGNORE                                                                #
+# # Include your project-specific ignores in this file                        #
+# # Read about how to use .gitignore:                                         #
+# # https://help.github.com/articles/ignoring-files                           #
+# #############################################################################
+
+
+# GULP and SASS
+# --------------------------------------------------------------------------- #
+
+node_modules/*
+.sass-cache/*
+
+
+# Composer
+# --------------------------------------------------------------------------- #
+
+/vendor
+
+
+# Build artefacts            
+# --------------------------------------------------------------------------- #
+
+/web/dist/*
+/node_modules/*
+/yarn-error.log
+/npm-debug.log
+/mix-manifest.json
+
+
+# Caches
+# --------------------------------------------------------------------------- #
+
+sized/
+thumbs/
+_thumbs/
+/bak/*
+/web/cache/*
+
+# CraftCMS environment
+# --------------------------------------------------------------------------- #
+
+.env.php
+.env.sh
+.env
+
+
+# CraftCMS Caches
+# --------------------------------------------------------------------------- #
+
+/storage/backups/*
+!/storage/backups/.gitignore
+
+/storage/logs/*
+!/storage/logs/.gitignore
+
+/storage/runtime/*
+!/storage/runtime/.gitignore
+
+/web/cpresources/*
+
+
+# CraftCMS User Uploads
+# --------------------------------------------------------------------------- #
+
+/web/uploads/*
+!/web/uploads/index.html
+
+
+# CraftCMS plugins
+# --------------------------------------------------------------------------- #
+
+/web/imager/*
+
+
+# Dev
+# --------------------------------------------------------------------------- #
+
+/_dev/*
+
+
+# Webserver
+# --------------------------------------------------------------------------- #
+
+/.cpaddons/*
+/.cpanel/*
+/.htpasswds/*
+/.mozilla/*
+/bin/*
+/etc/*
+/mail/*
+/php/*
+/public_ftp/*
+/.ssh/*
+/tmp/*
+/www/*
+/access-logs
+.bash_logout
+.bash_profile
+.bashrc
+.contactemail
+.gemrc
+.lastlogin
+.pearrc
+
+
+# Compiled source
+# --------------------------------------------------------------------------- #
+
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+
+# Packages
+# --------------------------------------------------------------------------- #
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+
+# Globally ignored extensions
+# --------------------------------------------------------------------------- #
+
+*.bak
+*.diff
+*.err
+*.orig
+*.js.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*.gem
+*.rbc
+*.scssc
+*.tmproj
+*.sql
+*.sqlite
+
+
+# OS generated files
+# --------------------------------------------------------------------------- #
+
+ehthumbs.db
+.DS_Store
+Icon
+.cache
+error_log
+.ftpquota
+.hg
+.idea
+nbproject
+node_modules
+.project
+.rvmrc
+.sass-cache
+.settings
+[Tt]humbs.db
+
+
+# Misc
+# --------------------------------------------------------------------------- #
+
+__data/*
+__downloads/*
+__scratchpad/*
+__sql/*
+*.esproj/*
+*.esproj
+.buildpath
+.project
+.settings/*
+log.htm
+log.txt
+web/error_log
+*.sublime-project
+*.sublime-workspace
