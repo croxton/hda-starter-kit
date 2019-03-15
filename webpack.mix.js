@@ -12,7 +12,7 @@ let mix = require('laravel-mix');
  */
 
 // dependencies
-var tailwindcss = require('tailwindcss');
+let tailwindcss = require('tailwindcss');
 require('laravel-mix-purgecss');
 require('laravel-mix-eslint');
 
@@ -50,7 +50,7 @@ mix.sass('src/app.scss', 'web/dist/')
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],
     });
-mix.purgeCss({ folders: ['app/templates/', 'web'], extensions: ['twig', 'html'] });
+mix.purgeCss({ folders: ['templates/', 'web'], extensions: ['twig', 'html'] });
 
 // move fonts
 mix.copyDirectory('src/fonts/', 'web/dist/fonts/');
