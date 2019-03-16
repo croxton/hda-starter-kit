@@ -16,24 +16,35 @@ let tailwindcss = require('tailwindcss');
 require('laravel-mix-purgecss');
 require('laravel-mix-eslint');
 
-// autoload primary js libraries
-// note: don't do this, use Vue or jQuery, not both
+// autoload js libraries, e.g. jQuery installed with npm...
 mix.autoload({
-    jquery: ['$', 'window.jQuery'],
-    vue: ['Vue', 'window.Vue']
+    jquery: [
+        '$', 
+        'window.jQuery'
+    ]
 });
 
+// ...alternatively you can register js libraries as external scripts 
+// (e.g. if you want to load jQuery from a CDN)
+//mix.webpackConfig({
+//    externals: {
+//        "jquery": "jQuery"
+//    }
+//});
+
 // app bundle 
-// extract vendor modules to be compiled to vendor.js
+// extract vendor modules (installed with npm) to be compiled to vendor.js
 mix.js('src/app.js', 'web/dist/')
     .eslint({
         fix: false,
         cache: false
     })
-    .extract(['jquery', 'vue']);
+    .extract([
+        'jquery', 
+        'vue'
+    ]);
 
-// vendor scripts bundle, if you want to manually manage these
-// rather than use use `npm install` and extract() them as above
+// if you simply want to transpile, concatenate and minify a bundle of scripts manually:
 //mix.babel([
 //    'src/scripts/vendor/console.js'
 //], 'web/dist/vendor.js');
@@ -50,7 +61,7 @@ mix.sass('src/app.scss', 'web/dist/')
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],
     });
-mix.purgeCss({ folders: ['templates/', 'web'], extensions: ['twig', 'html'] });
+mix.purgeCss({ folders: ['templates/', 'web/'], extensions: ['twig', 'html'] });
 
 // move fonts
 mix.copyDirectory('src/fonts/', 'web/dist/fonts/');

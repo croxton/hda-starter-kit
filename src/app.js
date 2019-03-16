@@ -17,9 +17,12 @@
 // example of importing a module that you've added via `npm install`
 // import Flickity from "flickity";
 
-// jQuery test
-import $ from "jquery";
-$("#test-jquery").html("hello");
+// jQuery test (jquery either autoloaded in webpack.mix.js or simply included via <script>)
+$("#test-jquery").html("Hello. ");
+
+// jQuery in a module test
+import * as test from "./scripts/modules/test.js";
+test.say("Is it me you're looking for?");
 
 // Vue test
 import Vue from "vue";
