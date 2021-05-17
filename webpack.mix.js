@@ -37,7 +37,6 @@ const source = {
     scripts: path.resolve(config.srcScripts),
     styles: path.resolve(config.srcStyles),
     static: path.resolve(config.srcStatic),
-    templates: path.resolve(config.srcTemplates),
 };
 
 // 🎚️ Misc
@@ -70,8 +69,7 @@ if (mix.inProduction() && config.filenameHashing) {
 
 /**
  * 🎨 Styles: Main
- * https://laravel-mix.com/docs/4.0/css-preprocessors
- * https://github.com/sass/node-sass#options
+ * https://laravel-mix.com/docs/6.0/sass
  */
 // Get a list of style files within the base styles folder
 let styleFiles = globby.sync(`${source.styles}/*.{scss,sass}`);
@@ -94,10 +92,9 @@ styleFiles.forEach(styleFile => {
 /**
  * 🎨 Styles: PostCSS
  * Extend Css with plugins
- * https://laravel-mix.com/docs/4.0/css-preprocessors#postcss-plugins
  */
 const postCssPlugins = [
-    // https://tailwindcss.com/docs/installation/#laravel-mix
+    // https://tailwindcss.com/docs/guides/laravel#configure-tailwind-with-laravel-mix
     require('tailwindcss')('./tailwind.config.js'),
 
     /**
@@ -118,7 +115,7 @@ mix.options({ postCss: postCssPlugins });
 
 /**
  * 🎨 Styles: Other
- * https://laravel-mix.com/docs/4.0/options
+ * https://laravel-mix.com/docs/6.0/api#optionsoptions
  */
 mix.options({
     // Disable processing css urls for speed
@@ -129,7 +126,7 @@ mix.options({
 /**
  * 📑 Scripts: Main
  * Script files are transpiled to vanilla JavaScript
- * https://laravel-mix.com/docs/4.0/mixjs
+ * https://laravel-mix.com/docs/6.0/mixjs
  */
 const scriptFiles = globby.sync(`${source.scripts}/*.{js,mjs}`);
 scriptFiles.forEach(scriptFile => {
@@ -156,7 +153,7 @@ mix.polyfill({
 /**
  * 📑 Scripts: Auto import libraries
  * Make JavaScript libraries available without an import
- * https://laravel-mix.com/docs/4.0/autoloading
+ * https://laravel-mix.com/docs/6.0/autoloading
  */
 mix.autoload({
     jquery: ["$", "jQuery", "window.jQuery"],
@@ -165,9 +162,7 @@ mix.autoload({
 /**
  * 📑 Scripts: Vendor
  * Separate the JavaScript code imported from node_modules
- * https://laravel-mix.com/docs/4.0/extract
- * Without mix.extract you'll see an annoying js error after
- * launching the dev server - this should be fixed in webpack 5
+ * https://laravel-mix.com/docs/6.0/extract
  */
 if (!mix.inProduction()) {
     mix.extract([])
@@ -248,8 +243,7 @@ mix.copyDirectory(
 );
 
 /**
- * 🚧 Webpack-dev-server
- * https://webpack.js.org/configuration/dev-server/
+ * 🚧 Webpack-dev-server (v4.0.0-beta.2)
  */
 const chokidar = require('chokidar');
 
