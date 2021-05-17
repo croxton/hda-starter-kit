@@ -1,6 +1,6 @@
 # Laravel Mix & Tailwind CSS Starter config
 
-A solid platform for front-end development.
+A solid platform for front-end development. Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
 
 * Laravel Mix 6 / Webpack 5 / PostCSS 8
 * Development proxy with script and style injection (HMR, file watching)  
@@ -19,6 +19,7 @@ A solid platform for front-end development.
 To do:
 * Critical CSS
 * Legacy / modern bundles
+* Static site generation
 
 ## Requirements
 
