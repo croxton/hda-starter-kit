@@ -28,6 +28,7 @@ node_modules/*
 /npm-debug.log
 /mix-manifest.json
 /web/mix-manifest.json
+/web/hot
 
 
 # Caches

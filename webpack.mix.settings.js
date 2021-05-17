@@ -8,7 +8,7 @@ module.exports = {
     devProxyDomain: process.env.DEFAULT_SITE_URL || "https://laravel-mix-tailwind-starter.test",
 
     // Paths to observe for changes then trigger a full page reload
-    devWatchPaths: ['./templates/**/*.twig', './templates/**/*.html'],
+    devWatchPaths: ['./templates/**/*.twig', './templates/**/*.html', './web/*.html'],
 
     // Port to use with webpack-dev-server
     devServerPort: 8080,

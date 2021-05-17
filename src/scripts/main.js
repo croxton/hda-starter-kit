@@ -26,6 +26,6 @@ test.say("Is it me you're looking for?");
 
 // Vue test
 import Vue from "vue";
-const app = new Vue({
+const main = new Vue({
     el: "#test-vue"
 });

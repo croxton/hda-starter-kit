@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Laravel Mix Tailwind Starter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- In development, split out Tailwind to speed up rebuilds (if not using JIT) -->
+    <link rel="stylesheet" type="text/css" href="/dist/main.css">
+    <link rel="stylesheet" type="text/css" href="/dist/_tailwind.utilities.css">
+
+    <!-- In production
+    <link rel="stylesheet" type="text/css" href="/dist/global.css">
+     -->
+
+</head>
+<body class="ltr">
+
+<!-- Tailwind JIT -->
+<h1 class="text-2xl bg-red-700 text-white antialiased p-6 mb-4">Laravel Mix Tailwind Starter</h1>
+
+<!-- SCSS -->
+<h2 class="c-example">An example of using a CSS component</h2>
+
+<!-- Vue mount point -->
+<div id="test-vue"></div>
+
+<!-- jQuery example -->
+<div id="test-jquery"></div>
+
+<!-- Webpack -->
+<script src="/dist/manifest.js"></script>
+<script src="/dist/vendor.js"></script>
+<script src="/dist/main.js"></script>
+</body>
+</html>

@@ -8,7 +8,6 @@
  * 🎚️ Settings
  * 🎭 Hashing
  * 🎨 Styles
- * 🎨 Styles: PurgeCSS
  * 🎨 Styles: PostCSS
  * 🎨 Styles: Polyfills
  * 🎨 Styles: Vendor
@@ -90,21 +89,6 @@ styleFiles.forEach(styleFile => {
         path.join(config.publicFolder, config.publicBuildFolder)
     )
 });
-
-/**
- * 🎨 Styles: PurgeCSS
- * https://github.com/spatie/laravel-mix-purgecss#usage
- */
-if (config.purgeCssGrabFolders.length) {
-    require("laravel-mix-purgecss")
-    mix.purgeCss({
-        enabled: mix.inProduction(),
-        folders: config.purgeCssGrabFolders, // Folders scanned for selectors
-        whitelist: config.purgeCssWhitelist,
-        whitelistPatterns: config.purgeCssWhitelistPatterns,
-        extensions: config.purgeCssExtensions,
-    })
-}
 
 /**
  * 🎨 Styles: PostCSS

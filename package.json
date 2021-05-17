@@ -7,8 +7,9 @@
   "license": "ISC",
   "scripts": {
     "dev": "npm run clean && mix watch --hot",
+    "check": "npm run clean && SOURCE_MAPS=true LINT=true && mix watch --hot",
     "build": "npm run clean && mix --production",
-    "clean": "rimraf web/dist/* web/{,**/}*{html,json}",
+    "clean": "rimraf web/dist/* web/{,**/}*{json}",
     "fix-scripts": "eslint --fix 'src/scripts/**/*.{vue,js,jsx,mjs}'"
   },
   "dependencies": {
