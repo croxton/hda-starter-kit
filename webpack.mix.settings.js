@@ -64,17 +64,19 @@ module.exports = {
 
     // Shared vendor modules - empty params = separate all *used* node_modules
     vendor: [
-        'axios',
-        'focus-visible',
         'lazysizes',
         'lazy-scripts',
         'pubsub-js',
+        'vue',
+        'jquery'
     ],
 
-    // If you have more than one entry point for CSS/SCSS,
-    // optionally combine the files in a specific order
-    srcStyleFiles: [
-        "main",
+    // Optionally, split out CSS files to speed up local development with Tailwind
+    srcStyleFilesDev: [
+        "_styles",
         "_tailwind.utilities",
+    ],
+    srcStyleFilesProd: [
+        "main",
     ],
 };

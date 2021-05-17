@@ -12,20 +12,35 @@
 /* eslint-disable no-unused-vars */
 
 // example of importing one of your own modules:
-// import * as nav from "./scripts/modules/navigation.js";
+// import * as nav from "./modules/navigation";
 
-// example of importing a module that you've added via `npm install`
-// import Flickity from "flickity";
+// SVG icon sprites
+import "./modules/svgIconSprite";
 
-// jQuery test (jquery either autoloaded in webpack.mix.js or simply included via <script>)
+// Lazy loaded images
+// @see https://github.com/aFarkas/lazysizes
+import 'lazysizes';
+
+// Lazy loaded scripts
+// @see https://github.com/djpogo/lazy-scripts
+import LazyScripts from 'lazy-scripts';
+new LazyScripts();
+
+// Publishes a 'resizeDone' event triggered when window resizing is complete.
+// Components can subscribe to it to update their state.
+// Also sets a --windowHeight css variable for use in CSS, instead of 100vh
+import "./modules/resizeDone";
+
+// jQuery example (jquery either autoloaded in webpack.mix.js or simply included via <script>)
 $("#test-jquery").html("Hello. ");
 
-// jQuery in a module test
+// jQuery in a module example
 import * as test from "./modules/test.js";
 test.say("Is it me you're looking for?");
 
-// Vue test
+// Vue example
 import Vue from "vue";
+Vue.config.productionTip = false;
 const main = new Vue({
     el: "#test-vue"
 });

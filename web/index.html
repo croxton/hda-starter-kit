@@ -7,15 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- In development, split out Tailwind to speed up rebuilds (if not using JIT) -->
-    <link rel="stylesheet" type="text/css" href="/dist/main.css">
+    <link rel="stylesheet" type="text/css" href="/dist/_styles.css">
     <link rel="stylesheet" type="text/css" href="/dist/_tailwind.utilities.css">
 
     <!-- In production
-    <link rel="stylesheet" type="text/css" href="/dist/global.css">
+    <link rel="stylesheet" type="text/css" href="/dist/main.css">
      -->
-
 </head>
-<body class="ltr">
+<body class="ltr" data-icons="/dist/sprite.svg">
 
 <!-- Tailwind JIT -->
 <h1 class="text-2xl bg-red-700 text-white antialiased p-6 mb-4">Laravel Mix Tailwind Starter</h1>
@@ -28,6 +27,16 @@
 
 <!-- jQuery example -->
 <div id="test-jquery"></div>
+
+<!-- icon example -->
+<svg class="w-8 h-8 text-red-600">
+    <use xlink:href="#icon-chevron-right"></use>
+</svg>
+
+<!-- lazy loaded script -->
+<div data-lazy-script="/dist/example-lazy-script.js" id="js-example-component">
+
+</div>
 
 <!-- Webpack -->
 <script src="/dist/manifest.js"></script>

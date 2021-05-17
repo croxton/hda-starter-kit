@@ -70,16 +70,17 @@ if (mix.inProduction() && config.filenameHashing) {
 
 /**
  * 🎨 Styles: Main
- * Uses dart-sass which has a replica API to Node-Sass
  * https://laravel-mix.com/docs/4.0/css-preprocessors
  * https://github.com/sass/node-sass#options
  */
 // Get a list of style files within the base styles folder
-let styleFiles;
-if (config.srcStyleFiles.length) {
-    styleFiles = config.srcStyleFiles.map(i => source.styles + '/' + i + '.scss');
-} else {
-    styleFiles = globby.sync(`${source.styles}/*.{scss,sass}`);
+let styleFiles = globby.sync(`${source.styles}/*.{scss,sass}`);
+if (config.srcStyleFilesDev.length && config.srcStyleFilesProd.length ) {
+    if (!mix.inProduction()) {
+        styleFiles = config.srcStyleFilesDev.map(i => source.styles + '/' + i + '.scss');
+    } else {
+        styleFiles = config.srcStyleFilesProd.map(i => source.styles + '/' + i + '.scss');
+    }
 }
 
 // Create an asset for every style file
@@ -124,13 +125,6 @@ mix.options({
     // https://laravel-mix.com/docs/4.0/css-preprocessors#css-url-rewriting
     processCssUrls: false,
 });
-
-// combine the CSS entry points into a single file
-if (mix.inProduction()) {
-    const buildFolder = path.join(config.publicFolder, config.publicBuildFolder);
-    const combineFilesArr = config.srcStyleFiles.map(i => buildFolder + '/' + i + '.css');
-    mix.combine(combineFilesArr, buildFolder + '/global.css');
-}
 
 /**
  * 📑 Scripts: Main

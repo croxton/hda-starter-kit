@@ -1,67 +1,14 @@
 /* ============================================================================
-   app.scss
+   main.scss
    ========================================================================= */
 
 /**
- * Styles used throughout the website.
+ * Combined styles used throughout the website.
+ * This is used in production only
  *
  * @author: Mark Croxton, mcroxton@hallmark-design.co.uk
  * @copyright: Hallmark Design
  */
 
-/* Settings: global variables, config switches
-   ========================================================================== */
-
-
-/* Functions
-   ========================================================================== */
-
-
-/* Mixins
-   ========================================================================== */
-
-
-/* Base: styles for un-classed HTML elements
-   ========================================================================== */
-
-/**
- * This injects Tailwind's base styles, which is a combination of
- * Normalize.css and some additional base styles.
- *
- * You can see the styles here:
- * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
-*/
-
-@tailwind base;
-
-
-/* Vendor: third party components
-   ========================================================================== */
-
-
-/* Objects reusable design patterns - e.g. grids, ratios, vertical flow
-   ========================================================================== */
-
-
-/* Layouts - layout skeletons
-   ========================================================================== */
-
-
-/* Components: implementation-specific pieces of UI
-   ========================================================================== */
-
-/**
- * This injects any component classes registered by plugins.
- */
-@tailwind components;
-
-/**
-  * Add your own components here, e.g.:
-  *
-  * @import "scss/components/buttons";
-  * @import "scss/components/forms";
-  */
-@import 'components/example';
-
-/* Utils: utility and helper classes
-   ========================================================================== */
+@import '_styles';
+@import '_tailwind.utilities';
