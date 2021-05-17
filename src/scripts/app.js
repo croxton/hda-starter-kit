@@ -4,10 +4,10 @@
 
 /**
  * Main script bundle used throughout the website
- * 
+ *
  * @author: Mark Croxton, mcroxton@hallmark-design.co.uk
  * @copyright: Hallmark Design
- */  
+ */
 
 /* eslint-disable no-unused-vars */
 
@@ -21,7 +21,7 @@
 $("#test-jquery").html("Hello. ");
 
 // jQuery in a module test
-import * as test from "./scripts/modules/test.js";
+import * as test from "./modules/test.js";
 test.say("Is it me you're looking for?");
 
 // Vue test

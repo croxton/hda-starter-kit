@@ -27,6 +27,7 @@ node_modules/*
 /yarn-error.log
 /npm-debug.log
 /mix-manifest.json
+/web/mix-manifest.json
 
 
 # Caches

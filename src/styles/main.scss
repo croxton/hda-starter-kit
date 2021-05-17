@@ -4,7 +4,7 @@
 
 /**
  * Styles used throughout the website.
- * 
+ *
  * @author: Mark Croxton, mcroxton@hallmark-design.co.uk
  * @copyright: Hallmark Design
  */
@@ -21,7 +21,7 @@
    ========================================================================== */
 
 
-/* Base: styles for unclassed HTML elements
+/* Base: styles for un-classed HTML elements
    ========================================================================== */
 
 /**
@@ -32,10 +32,10 @@
  * https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
 */
 
- @tailwind preflight;
+@tailwind base;
 
 
-/* Vendor: third party components 
+/* Vendor: third party components
    ========================================================================== */
 
 
@@ -43,48 +43,25 @@
    ========================================================================== */
 
 
-/* Components: implementation-specific pieces of UI
-   ========================================================================== */  
+/* Layouts - layout skeletons
+   ========================================================================== */
 
- /**
-  * This injects any component classes registered by plugins.
-  */
- @tailwind components;
+
+/* Components: implementation-specific pieces of UI
+   ========================================================================== */
+
+/**
+ * This injects any component classes registered by plugins.
+ */
+@tailwind components;
 
 /**
   * Add your own components here, e.g.:
-  * 
+  *
   * @import "scss/components/buttons";
   * @import "scss/components/forms";
   */
 
 
-/* Layouts - layout skeletons for a specific context
-   ========================================================================== */
-
-
-
 /* Utils: utility and helper classes
-   ========================================================================== */  
-
- /**
-  * This injects all of Tailwind's utility classes, generated based on your
-  * config file.
-  */
- @tailwind utilities;
- 
- /**
-  * Here you would add any custom utilities you need that don't come out of the
-  * box with Tailwind.
-  *
-  * Example :
-  *
-  * .bg-pattern-graph-paper { ... }
-  * .skew-45 { ... }
-  *
-  * Or if using a preprocessor or `postcss-import`:
-  *
-  * @import "utilities/background-patterns";
-  * @import "utilities/skew-transforms";
-  */
- 
+   ========================================================================== */
