@@ -43,9 +43,9 @@ Run the development server (with hot module reloading and file watching)
 
     npm run dev
 
-Run the development build (with hot module reloading, linting and source maps)
+Run the development server (with linting and source maps)
 
-    npm run check
+    npm run debug
 
 Run the production build
 

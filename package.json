@@ -5,8 +5,8 @@
   "main": "tailwind.config.js",
   "scripts": {
     "dev": "npm run clean && mix watch --hot",
-    "check": "npm run clean && SOURCE_MAPS=true LINT=true && mix watch --hot",
-    "build": "npm run clean && mix --production",
+    "debug": "npm run clean && SOURCE_MAPS=true LINT=true mix watch --hot",
+    "build": "npm run clean && SOURCE_MAPS=true mix --production",
     "clean": "rimraf web/dist/* web/{,**/}*{json}",
     "fix-scripts": "eslint --fix 'src/scripts/**/*.{vue,js,jsx,mjs}'",
     "fix-styles": "stylelint --fix 'src/styles/**/*.{css,scss}'"
@@ -31,6 +31,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-vue": "^7.9.0",
+    "eslint-webpack-plugin": "^2.5.4",
     "globby": "^11.0.3",
     "install": "^0.13.0",
     "laravel-mix": "^6.0.19",
