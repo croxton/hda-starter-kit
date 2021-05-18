@@ -15,10 +15,13 @@ module.exports = {
 
     // Enable Filename hashing instead of query string for asset versioning?
     // Enable this if you use Twigpack or similar
-    fileameHashing: false,
+    filenameHashing: false,
 
     // Optimise image sources? Note: can slow down rebuild times
     imagemin: false,
+
+    // Create icon sprites?
+    icons: true,
 
     // Urls for CriticalCss to look for "above the fold" Css
     criticalCssUrls: [

@@ -45,7 +45,7 @@ mix.disableNotifications()
 mix.webpackConfig({ resolve: { alias: source } })
 
 // 🎚️ Source maps
-if (process.env.SOURCE_MAPS == 'true') {
+if (process.env.SOURCE_MAPS === 'true') {
     mix.sourceMaps()
 }
 
@@ -173,7 +173,7 @@ if (!mix.inProduction()) {
 /**
  * 📑 Scripts: Linting
  */
-if (process.env.LINT == 'true' && !mix.inProduction()) {
+if (process.env.LINT === 'true' && !mix.inProduction()) {
     require("laravel-mix-eslint");
     mix.eslint();
 }
@@ -184,7 +184,7 @@ if (process.env.LINT == 'true' && !mix.inProduction()) {
  * https://github.com/Klathmon/imagemin-webpack-plugin#api
  */
 if (config.imagemin) {
-    require("laravel-mix-imagemin")
+    require("laravel-mix-imagemin");
     mix.imagemin(
         {
             from: path.join(source.images, "**/*"),
@@ -214,24 +214,26 @@ if (config.imagemin) {
  * Individual SVG icons are optimised then combined into a single cacheable SVG
  * https://github.com/kisenka/svg-sprite-loader#configuration
  */
-require("laravel-mix-svg-sprite")
-mix.svgSprite(source.icons, path.join(config.publicBuildFolder, "sprite.svg"), {
-    symbolId: filePath => `icon-${path.parse(filePath).name}`,
-    extract: true,
-});
+if (config.icons) {
+    require("laravel-mix-svg-sprite");
+    mix.svgSprite(source.icons, path.join(config.publicBuildFolder, "sprite.svg"), {
+        symbolId: filePath => `icon-${path.parse(filePath).name}`,
+        extract: true,
+    });
 
-// Icon options
-mix.options({
-    imgLoaderOptions: {
-        svgo: {
-            plugins: [
-                { convertColors: { currentColor: true } },
-                { removeDimensions: false },
-                { removeViewBox: false },
-            ],
+    // Icon options
+    mix.options({
+        imgLoaderOptions: {
+            svgo: {
+                plugins: [
+                    {convertColors: {currentColor: true}},
+                    {removeDimensions: false},
+                    {removeViewBox: false},
+                ],
+            },
         },
-    },
-});
+    });
+}
 
 /**
  * 🗂️ Static
