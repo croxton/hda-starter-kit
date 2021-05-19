@@ -13,3 +13,9 @@ new Vue({
     template: '<App/>',
     components: {App}
 });
+
+// Accept HMR
+// https://webpack.js.org/api/hot-module-replacement#accept
+if (module.hot) {
+    module.hot.accept();
+}

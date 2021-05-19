@@ -25,6 +25,7 @@ import 'lazysizes';
 // @see https://github.com/djpogo/lazy-scripts
 import LazyScripts from 'lazy-scripts';
 new LazyScripts();
+console.log('test');
 
 // Publishes a 'resizeDone' event triggered when window resizing is complete.
 // Components can subscribe to it to update their state.
@@ -44,3 +45,9 @@ Vue.config.productionTip = false;
 const main = new Vue({
     el: "#test-vue"
 });
+
+// Accept HMR
+// https://webpack.js.org/api/hot-module-replacement#accept
+if (module.hot) {
+    module.hot.accept();
+}
