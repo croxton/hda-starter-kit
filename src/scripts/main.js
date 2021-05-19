@@ -25,7 +25,6 @@ import 'lazysizes';
 // @see https://github.com/djpogo/lazy-scripts
 import LazyScripts from 'lazy-scripts';
 new LazyScripts();
-console.log('test');
 
 // Publishes a 'resizeDone' event triggered when window resizing is complete.
 // Components can subscribe to it to update their state.
