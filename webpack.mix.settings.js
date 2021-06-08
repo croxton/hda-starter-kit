@@ -58,13 +58,4 @@ module.exports = {
         'vue',
         'jquery'
     ],
-
-    // Optionally, split out CSS files to speed up local development with Tailwind
-    srcStyleFilesDev: [
-        "_styles",
-        "_tailwind.utilities",
-    ],
-    srcStyleFilesProd: [
-        "main",
-    ],
 };

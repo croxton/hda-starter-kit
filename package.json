@@ -1,6 +1,6 @@
 {
   "name": "laravel-mix-tailwind-starter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Laravel Mix, Tailwind, Vue / Vanilla starter",
   "main": "tailwind.config.js",
   "scripts": {

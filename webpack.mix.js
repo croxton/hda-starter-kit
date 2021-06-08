@@ -73,13 +73,6 @@ if (mix.inProduction() && config.filenameHashing) {
  */
 // Get a list of style files within the base styles folder
 let styleFiles = globby.sync(`${source.styles}/*.{scss,sass}`);
-if (config.srcStyleFilesDev.length && config.srcStyleFilesProd.length ) {
-    if (!mix.inProduction()) {
-        styleFiles = config.srcStyleFilesDev.map(i => source.styles + '/' + i + '.scss');
-    } else {
-        styleFiles = config.srcStyleFilesProd.map(i => source.styles + '/' + i + '.scss');
-    }
-}
 
 // Create an asset for every style file
 styleFiles.forEach(styleFile => {
