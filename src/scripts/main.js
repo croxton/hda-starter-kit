@@ -15,7 +15,8 @@
 // import * as nav from "./modules/navigation";
 
 // SVG icon sprites
-import "./modules/svgIconSprite";
+import SvgIconSprite from './modules/svgIconSprite';
+new SvgIconSprite();
 
 // Lazy loaded images
 // @see https://github.com/aFarkas/lazysizes

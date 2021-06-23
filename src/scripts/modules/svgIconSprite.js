@@ -16,35 +16,43 @@
  */
 require.context("icons", true, /\.svg$/);
 
-/**
- * Insert a hidden SVG containing icons at the top of the body
- */
-const bodyElement = document.querySelector("body");
-const bodyAttribute = "data-icons";
-const iconsPath = bodyElement.getAttribute(bodyAttribute);
+class SvgIconSprite {
 
-const inlineFile = iconsPath => {
-    if (!iconsPath) {
-        //return console.warn(
-        //    `No body attribute of "${bodyAttribute}" found for SVG icon sprite`
-        //);
+    /**
+     * Insert a hidden SVG containing icons at the top of the body
+     */
+    constructor() {
+        this.bodyElement = document.querySelector("body");
+        this.bodyAttribute = "data-icons";
+        this.iconsPath = this.bodyElement.getAttribute(this.bodyAttribute);
+
+        this.inlineFile(this.iconsPath);
     }
 
-    const request = new XMLHttpRequest();
-    request.open("GET", iconsPath, true);
-
-    request.onload = () => {
-        if (request.status >= 200 && request.status < 400) {
-            const svgIcon = request.responseXML.documentElement;
-            svgIcon.setAttribute("display", "none");
-            svgIcon.setAttribute("aria-hidden", true);
-            svgIcon.setAttribute("class", "hidden");
-            bodyElement.insertBefore(svgIcon, bodyElement.firstChild);
-            bodyElement.removeAttribute(bodyAttribute);
+    inlineFile = (iconsPath) => {
+        if (!iconsPath) {
+            //return console.warn(
+            //    `No body attribute of "${this.bodyAttribute}" found for SVG icon sprite`
+            //);
+            return; // do nothing, already initialised
         }
+
+        const request = new XMLHttpRequest();
+        request.open("GET", iconsPath, true);
+
+        request.onload = () => {
+            if (request.status >= 200 && request.status < 400) {
+                const svgIcon = request.responseXML.documentElement;
+                svgIcon.setAttribute("display", "none");
+                svgIcon.setAttribute("aria-hidden", "true");
+                svgIcon.setAttribute("class", "hidden");
+                this.bodyElement.insertBefore(svgIcon, this.bodyElement.firstChild);
+                this.bodyElement.removeAttribute(this.bodyAttribute);
+            }
+        };
+
+        request.send();
     };
+}
 
-    request.send();
-};
-
-inlineFile(iconsPath);
+export default SvgIconSprite;
