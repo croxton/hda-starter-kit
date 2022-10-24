@@ -83,33 +83,15 @@ export default class Share extends BaseComponent {
         return element;
     }
 
-
-    update(e) {
-        console.log('update');
-        if (document.contains(document.querySelector('[data-share]'))) {
-
-            // cleanup
-            this.destroy();
-
-            // mount again
-            this.mount();
-        }
-    }
-
-    destroy() {
-        console.log('destroy');
-        this.shares.forEach(element => {
-            // remove buttons and their event listeners
-            element.innerHTML = '';
-        });
-        this.shares = null;
-    }
-
     unmount() {
         if (this.mounted) {
 
             // cleanup
-            this.destroy();
+            this.shares.forEach(element => {
+                // remove buttons and their event listeners
+                element.innerHTML = '';
+            });
+            this.shares = null;
 
             // remove component reference
             this.ref = null;

@@ -9,216 +9,140 @@ export default class LoadComponents {
     registered = []; // ALL registered components
     loaded = []; // Only loaded component objects
 
-    reset(component) {
-        // Unmount and reset any previously loaded components when restoring from history
-        if (this.loaded[component].mounted === true && this.loaded[component].target) {
-            this.loaded[component].unmount();
-            this.loaded[component].mounted = false;
-            this.loaded[component].restore = true;
+    constructor() {
+        htmx.on('htmx:afterSwap', (htmxEvent) => {
+            for (const [key, entry] of Object.entries(this.registered)) {
+                this.lifeCycle(entry);
+            }
+        });
+        htmx.on('htmx:historyRestore', (htmxEvent) => {
+            for (const [key, entry] of Object.entries(this.registered)) {
+                this.lifeCycle(entry);
+            }
+        });
+    }
+
+    /**
+     * Manage the component lifecycle
+     *
+     * @param {object}  entry
+     */
+    lifeCycle(entry) {
+        if (entry.component in this.loaded) {
+            // Component has already been loaded
+            if (entry.selector) {
+                // If the component must match a selector,
+                // mount/unmount as necessary if found in DOM
+                if (document.querySelector(entry.selector)) {
+                    if (this.loaded[entry.component].mounted) {
+                        this.loaded[entry.component].remount();
+                    } else {
+                        this.loaded[entry.component].restoreFromCache();
+                        this.loaded[entry.component].mount();
+                        this.loaded[entry.component].mounted = true;
+                    }
+                } else {
+                    this.loaded[entry.component].unmount();
+                    this.loaded[entry.component].mounted = false;
+                }
+            }
+        } else {
+            // Not loaded yet
+            if (entry.selector) {
+                if (document.querySelector(entry.selector)) {
+                    // we matched selector in the DOM, so load the entry
+                    this.lazyload(entry);
+                }
+            } else {
+                // load immediately (only once)
+                this.lazyload(entry);
+            }
         }
     }
 
     /**
-     * Import a component (lazily, creating a separate chunk) and run its constructor
+     * Register a component
      *
      * @param {string}  component
      * @param {string | null}  selector
-     * @param {string | null}  target
      * @param {string | null}  strategy
      */
-    load(component, selector= null, target = null, strategy = null) {
+    load(component, selector = null, strategy = null) {
 
-        // Lazy load a component
-        if (selector && target) {
-
-            // Only load the component if a specific selector exists in the DOM
-            let elm = document.querySelector(selector);
-            if (elm) {
-                this.lazyLoad(component, selector, target, strategy);
-            }
-            elm = null;
-
-            if (!(component in this.registered)) {
-
-                // If we've been given a target, listen for when the component enters or exits the dom
-                // Components can optionally save the innerHTML of one or more elements representing
-                // the initial dom state of the component before it is changed by the component logic.
-                // Here we restore the initial state *before* the dom is saved into history
-                // so that on restoration from the page cache, we get back the original pristine dom state
-                htmx.on('htmx:beforeHistorySave', (htmxEvent) => {
-                    if (component in this.loaded) {
-                        this.loaded[component].restoreFromCache();
-                    }
-                });
-
-                // Allow component to do its own garbage collection when swapping to a new page,
-                // such as removing event listeners and destroying objects created by the component.
-                htmx.on('htmx:beforeSwap', (htmxEvent) => {
-                    if (component in this.loaded && this.loaded[component].mounted) {
-                        if (htmxEvent.target.id === target) {
-                            this.loaded[component].unmount();
-                            this.loaded[component].mounted = false;
-                            this.loaded[component].restore = true;
-                        } else {
-                            // If we're swapping into an *element that is NOT the component target*,
-                            // prevent the initial dom state of an already-mounted component
-                            // being restored from cache in this swap
-                            this.loaded[component].restore = false;
-                        }
-                    }
-                });
-
-                // New page swapped in, load and mount the component *if* the swapped element matches our component's target
-                htmx.on('htmx:afterSwap', (htmxEvent) => {
-                    if (htmxEvent.target.id === target) {
-                        let elm = document.querySelector(selector);
-                        if (elm) {
-                            this.lazyLoad(component, selector, target, strategy, htmxEvent);
-                        }
-                        elm = null;
-                    }
-                });
-
-                htmx.on('htmx:historyRestore', (htmxEvent) => {
-                    if (component in this.loaded) {
-                        this.reset(component);
-                    }
-                    let elm = document.querySelector(selector);
-                    if (elm) {
-                        this.lazyLoad(component, selector, target, strategy, htmxEvent);
-                    }
-                });
-            }
-
-        } else if (selector) {
-
-            // Only load the component if a specific selector exists in the DOM
-            let elm = document.querySelector(selector);
-            if (elm) {
-                this.lazyLoad(component, selector, target, strategy);
-            }
-            elm = null;
-
-            // We'll call the component's update() method on *any* subsequent HTMX swap.
-            // To do that, we subscribe it *the first time* the component is loaded
-            if (!(component in this.registered)) {
-                htmx.on('htmx:afterSwap', (htmxEvent) => {
-                    if (component in this.loaded) {
-                        if (htmxEvent.detail.elt.querySelector(selector)) {
-                            this.loaded[component].update(htmxEvent);
-                        }
-                    } else {
-                        if (document.querySelector(selector)) {
-                            this.lazyLoad(component, selector, target, strategy, htmxEvent);
-                        }
-                    }
-                });
-                htmx.on('htmx:historyRestore', (htmxEvent) => {
-                    let elm = document.querySelector(selector);
-                    if (elm) {
-                        this.lazyLoad(component, selector, target, strategy, htmxEvent);
-                    }
-                });
-            }
-
-        } else {
-            // No selector, so this is a component that is initialised only once and persists through page swaps
-            this.lazyLoad(component);
-
-            // We'll call the component's update() method on *any* subsequent HTMX swap.
-            // To do that, we subscribe it *the first time* the component is registered
-            if (!(component in this.registered)) {
-                htmx.on('htmx:afterSwap', (htmxEvent) => {
-                    if (component in this.loaded) {
-                        this.loaded[component].update(htmxEvent);
-                    }
-                });
-            }
+        // register component
+        let entry = {
+            component: component,
+            selector: selector,
+            strategy: strategy,
         }
 
-        // keep a register of components we've added events to
-        this.registered.push(component);
+        this.registered.push(entry);
+
+        // lazyload
+        this.lifeCycle(entry);
     }
 
     /**
      * Import a component and run its constructor
      * We'll use lazy loading for the chunk file
      *
-     * @param {string}  component
-     * @param {string | null}  selector
-     * @param {string | null}  target
-     * @param {string | null}  strategy
-     * @param {string | null} htmxEvent
+     * @param {object}  entry
      */
-    lazyLoad(component, selector = null, target = null, strategy = null, htmxEvent = null) {
+    lazyload(entry) {
 
-        if (component in this.loaded) {
+        let promises = [];
 
-            if (this.loaded[component].target) {
-                // remount components
-                this.loaded[component].remount(selector);
-                this.loaded[component].mounted = true;
-            } else {
-                // update persistent components
-                this.loaded[component].update(htmxEvent);
-            }
-        } else {
+        // custom import strategies
+        if (entry.strategy) {
 
-            let promises = [];
+            // support multiple strategies separated by pipes
+            // e.g. "idle | visible | media (min-width: 1024px)"
+            let requirements = entry.strategy
+                .split('|')
+                .map(requirement => requirement.trim())
+                .filter(requirement => requirement !== 'immediate')
+                .filter(requirement => requirement !== 'eager');
 
-            // custom import strategies
-            if (strategy) {
+            for (let requirement of requirements) {
+                // idle using requestIdleCallback
+                if (requirement === 'idle') {
+                    promises.push(
+                        strategies.idle()
+                    );
+                    continue;
+                }
 
-                // support multiple strategies separated by pipes
-                // e.g. "idle | visible | media (min-width: 1024px)"
-                let requirements = strategy
-                    .split('|')
-                    .map(requirement => requirement.trim())
-                    .filter(requirement => requirement !== 'immediate')
-                    .filter(requirement => requirement !== 'eager');
+                // media query, pass the rule inside parentheses
+                // e.g."media (only screen and (min-width:768px))"
+                if (requirement.startsWith('media')) {
+                    promises.push(
+                        strategies.media(requirement)
+                    );
+                    continue;
+                }
 
-                for (let requirement of requirements) {
-                    // idle using requestIdleCallback
-                    if (requirement === 'idle') {
-                        promises.push(
-                            strategies.idle()
-                        );
-                        continue;
-                    }
-
-                    // media query, pass the rule inside parentheses
-                    // e.g."media (only screen and (min-width:768px))"
-                    if (requirement.startsWith('media')) {
-                        promises.push(
-                            strategies.media(requirement)
-                        );
-                        continue;
-                    }
-
-                    // visible using intersectionObserver, optionally pass the
-                    // root margins of the observed element inside parentheses
-                    // e.g."visible (0px 0px 0px 0px)"
-                    if (requirement.startsWith('visible')) {
-                        promises.push(
-                            strategies.visible(selector, requirement)
-                        );
-                    }
+                // visible using intersectionObserver, optionally pass the
+                // root margins of the observed element inside parentheses
+                // e.g."visible (0px 0px 0px 0px)"
+                if (requirement.startsWith('visible') && entry.selector) {
+                    promises.push(
+                        strategies.visible(entry.selector, requirement)
+                    );
                 }
             }
-
-            Promise.all(promises)
-                .then(() => {
-                    import(
-                        /* webpackMode: "lazy" */
-                        /* webpackChunkName: "components/[request]" */
-                    '../components/local/' + component
-                        ).then((lazyComponent) => {
-                        this.loaded[component] = new lazyComponent.default(selector);
-                        this.loaded[component].mounted = true;
-                        this.loaded[component].target = target;
-                    });
-                });
-
         }
+
+        Promise.all(promises)
+            .then(() => {
+                import(
+                    /* webpackMode: "lazy" */
+                    /* webpackChunkName: "components/[request]" */
+                '../components/local/' + entry.component
+                    ).then((lazyComponent) => {
+                    this.loaded[entry.component] = new lazyComponent.default(entry.selector);
+                    this.loaded[entry.component].mounted = true;
+                });
+            });
+
     }
 }
