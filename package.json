@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run clean && mix watch --hot",
     "debug": "npm run clean && SOURCE_MAPS=true LINT=true mix watch --hot",
-    "build": "npm run clean && SOURCE_MAPS=true mix --production",
+    "build": "npm run clean && SOURCE_MAPS=false mix --production",
     "clean": "rimraf web/dist/* web/{,**/}*{json}",
     "fix-scripts": "eslint --fix 'src/scripts/**/*.{vue,js,jsx,mjs}'",
     "fix-styles": "stylelint --fix 'src/styles/**/*.{css,scss}'"
@@ -54,8 +54,7 @@
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "jquery": "^3.6.0",
-    "lazy-scripts": "^0.3.2",
+    "animated-scroll-to": "^2.3.0",
     "lazysizes": "^5.3.2",
     "pubsub-js": "^1.9.3",
     "vue": "^2.6.12"

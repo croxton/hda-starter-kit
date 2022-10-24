@@ -9,42 +9,21 @@
  * @copyright: Hallmark Design
  */
 
-/* eslint-disable no-unused-vars */
+/* import framework */
+import HtmxInit from './framework/htmxInit';
+import Start from './framework/start';
 
-// example of importing one of your own modules:
-// import * as nav from "./modules/navigation";
+// .no-js to .js
+let html = document.getElementsByTagName("html")[0];
+html.className = html.className.replace("no-js", "js");
 
-// SVG icon sprites
-import SvgIconSprite from './modules/svgIconSprite';
-new SvgIconSprite();
+// Initialise htmx
+if (typeof htmx != "undefined") {
+    new HtmxInit();
+}
 
-// Lazy loaded images
-// @see https://github.com/aFarkas/lazysizes
-import 'lazysizes';
-
-// Lazy loaded scripts
-// @see https://github.com/djpogo/lazy-scripts
-import LazyScripts from 'lazy-scripts';
-new LazyScripts();
-
-// Publishes a 'resizeDone' event triggered when window resizing is complete.
-// Components can subscribe to it to update their state.
-// Also sets a --windowHeight css variable for use in CSS, instead of 100vh
-import "./modules/resizeDone";
-
-// jQuery example (jquery either autoloaded in webpack.mix.js or simply included via <script>)
-$("#test-jquery").html("Hello. ");
-
-// jQuery in a module example
-import * as test from "./modules/test.js";
-test.say("Is it me you're looking for?");
-
-// Vue example
-import Vue from "vue";
-Vue.config.productionTip = false;
-const main = new Vue({
-    el: "#test-vue"
-});
+// Bootstrap our js framework
+const start = new Start();
 
 // Accept HMR
 // https://webpack.js.org/api/hot-module-replacement#accept

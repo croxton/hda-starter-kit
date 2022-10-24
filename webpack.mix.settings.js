@@ -13,10 +13,6 @@ module.exports = {
     // Port to use with webpack-dev-server
     devServerPort: 8080,
 
-    // Enable Filename hashing instead of query string for asset versioning?
-    // Enable this if you use Twigpack or similar
-    filenameHashing: false,
-
     // Optimise image sources? Note: can slow down rebuild times
     imagemin: false,
 
@@ -54,8 +50,6 @@ module.exports = {
     vendor: [
         'lazysizes',
         'lazy-scripts',
-        'pubsub-js',
-        'vue',
-        'jquery'
+        'pubsub-js'
     ],
 };

@@ -50,21 +50,19 @@ if (process.env.SOURCE_MAPS === 'true') {
 }
 
 /**
- * 🎭 Hashing (for non-static sites)
- * Mix has querystring hashing by default, eg: main.css?id=abcd1234
- * This script converts it to filename hashing, eg: main.abcd1234.css
- * https://github.com/JeffreyWay/laravel-mix/issues/1022#issuecomment-379168021
+ * 🎭 Hashing
  */
-if (mix.inProduction() && config.filenameHashing) {
+if (mix.inProduction()) {
+
     // Allow versioning in production
     mix.version()
-    // Get the manifest filepath for filehash conversion
-    const manifestPath = path.join(config.publicFolder, "mix-manifest.json");
-    // Run after mix finishes
-    mix.then(() => {
-        const laravelMixMakeFileHash = require("laravel-mix-make-file-hash");
-        laravelMixMakeFileHash(config.publicFolder, manifestPath)
-    })
+
+    /* Make sure dynamically imported chunks are versioned too */
+    mix.webpackConfig({
+        output: {
+            chunkFilename: config.publicBuildFolder + '/[name].js?id=[chunkhash]',
+        }
+    });
 }
 
 /**

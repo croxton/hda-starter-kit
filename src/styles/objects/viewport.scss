@@ -53,6 +53,10 @@
     --vh-min: calc(var(--windowHeight, 100vh) * 1 / 4);
   }
 
+  .o-viewport-1\/1 {
+    --vh-min: var(--windowWidth, 100vw);
+  }
+
   .o-viewport-none {
     --vh-span: 0;
     --vh-min: unset;

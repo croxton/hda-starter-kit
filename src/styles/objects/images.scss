@@ -1,0 +1,37 @@
+// -------------------------------------
+// Responsive images
+// -------------------------------------
+
+.no-js img.lazyload:not([data-lazy-custom]) {
+  display: none;
+}
+
+/* prevent broken image symbols */
+img.lazyload:not([src]):not([data-lazy-custom]) {
+  visibility: hidden;
+}
+
+.lazyload:not([data-lazy-custom]),
+.lazyloading:not([data-lazy-custom]) {
+  opacity: 0 ! important;
+}
+
+.lazyloaded:not([data-sal]):not([data-lazy-custom]) {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+/* unveil a div surrounding a picture element */
+[data-unveil] {
+  opacity:0;
+  transition: opacity 0.5s ease;
+
+  .lazyload,
+  .lazyloading {
+    opacity: 0.01 ! important;
+  }
+
+  &.is-lazyloaded {
+    opacity:1;
+  }
+}

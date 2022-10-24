@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US" class="no-js">
 <head>
-    <title>Page 1</title>
-    <meta name="description" content="This is page 1!" />
+    <title>Page 3</title>
+    <meta name="description" content="This is page 3!" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -31,10 +31,24 @@
 
 <main id="main" hx-history-elt>
 
-    <div id="box" class="relative overflow-hidden o-viewport o-viewport-1/1 md:o-viewport-4/1 bg-blue-500 flex justify-center items-center transition-colors duration-1000">
-        <h2 class="relative z-10 text-2xl text-white">Page 1</h2>
-        <img class="lazyload object-cover w-full h-full absolute inset-0" src="https://img.freepik.com/free-photo/beautiful-aerial-shot-fronalpstock-mountains-switzerland-beautiful-pink-blue-sky_181624-9315.jpg?w=2000&t=st=1666631777~exp=1666632377~hmac=fe2e21593130cc3ea65bdaf5f3315f4c31db89f6d04aea5572a9349268ebba58" alt="">
+    <div id="box" class="o-viewport o-viewport-1/1 md:o-viewport-4/1 text-white bg-yellow-500 flex justify-center items-center transition-colors duration-1000">
+        <h2 class="text-2xl text-white">Page 3</h2>
     </div>
+
+    <section class="p-12 space-y-12">
+
+        <header>
+            <h3>Example lazy loaded component using the 'visible' strategy.</h3>
+            <p>This component will only be loaded when it enters the viewport.</p>
+        </header>
+
+        <div
+            data-share="device facebook twitter linkedin"
+            data-share-label="Share on"
+            data-share-device="Share using device sharing"
+            data-share-url="https://www.anotherwebsite.com/">
+        </div>
+    </section>
 
 </main>
 
