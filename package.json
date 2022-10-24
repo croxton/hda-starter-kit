@@ -60,6 +60,11 @@
     "pubsub-js": "^1.9.3",
     "vue": "^2.6.12"
   },
+  "overrides": {
+    "svg-baker": {
+      "postcss": "7.0.36"
+    }
+  },
   "browserslist": [
     "> 0.5%",
     "safari >14",
