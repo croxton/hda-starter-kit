@@ -193,13 +193,18 @@ if (config.imagemin) {
             mozjpeg: {progressive: true, arithmetic: false},
             optipng: {optimizationLevel: 3}, // Lower number = speedier/reduced compression
             svgo: {
-                plugins: [
-                    {convertPathData: false},
-                    {convertColors: {currentColor: false}},
-                    {removeDimensions: true},
-                    {removeViewBox: false},
-                    {cleanupIDs: false},
-                ],
+                plugins: [{
+                    name: 'preset-default',
+                    params: {
+                        overrides: {
+                            convertPathData: false,
+                            convertColors: {currentColor: false},
+                            removeViewBox: false,
+                            cleanupIDs: false
+                        },
+                        removeDimensions: true,
+                    }
+                }],
             },
         }
     )
@@ -222,10 +227,16 @@ if (config.icons) {
         imgLoaderOptions: {
             svgo: {
                 plugins: [
-                    {convertColors: {currentColor: true}},
-                    {removeDimensions: false},
-                    {removeViewBox: false},
-                ],
+                    {
+                    name: 'preset-default',
+                    params: {
+                        overrides: {
+                            convertColors: {currentColor: false},
+                            removeViewBox: false,
+                        }
+                    },
+                    removeDimensions: true,
+                }],
             },
         },
     });
