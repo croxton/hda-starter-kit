@@ -114,6 +114,9 @@ mix.options({
     // Disable processing css urls for speed
     // https://laravel-mix.com/docs/4.0/css-preprocessors#css-url-rewriting
     processCssUrls: false,
+
+    // Disable calc because it's buggy with nested parentheses
+    cssNano: {calc: false}
 });
 
 /**
@@ -249,6 +252,8 @@ mix.options({
         port: config.devServerPort
     }
 });
+
+// @see https://github.com/webpack/webpack-dev-server/issues/3121
 mix.webpackConfig({
     devServer: {
         onBeforeSetupMiddleware(server) {
@@ -261,12 +266,12 @@ mix.webpackConfig({
                     persistent: true,
                     usePolling: true,
                 }
-            ).on('all', function() {
-                server.sockWrite(server.sockets, "content-changed");
+            ).on('all', () => {
+                server.sendMessage(server.webSocketServer.clients, "content-changed");
             })
         },
         open: true,
-        firewall: false, // Fixes "Invalid Host header error" on assets
+        allowedHosts: [config.devProxyDomain],
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
