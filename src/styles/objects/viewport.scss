@@ -23,7 +23,7 @@
   }
 }
 
-@responsive {
+@layer utilities {
   .o-viewport-full {
     --vh-span: 1;
     --vh-min: unset;
