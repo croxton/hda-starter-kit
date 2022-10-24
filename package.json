@@ -23,8 +23,8 @@
   "homepage": "https://github.com/croxton/laravel-mix-tailwind-starter#readme",
   "devDependencies": {
     "autoprefixer": "^10.4.12",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.26.0",
+    "@babel/eslint-parser": "^7.5.4",
+    "eslint": "8.22.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
@@ -61,15 +61,11 @@
     "vue": "^2.6.12"
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "Firefox ESR",
-    "not ie 10",
+    "> 0.5%",
+    "safari >14",
     "not op_mini all",
-    "not op_mob 12.1",
-    "not baidu 7.12",
-    "not ie_mob 10",
-    "not ie_mob 11",
-    "not and_uc 11.8"
+    "not UCAndroid 12",
+    "not ios <14.5",
+    "not dead"
   ]
 }

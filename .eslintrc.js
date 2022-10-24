@@ -3,8 +3,10 @@
 module.exports = {
   parser: 'vue-eslint-parser',
     parserOptions: {
-      'parser': 'babel-eslint',
-      'sourceType': 'module'
+      'parser': '@babel/eslint-parser',
+      'sourceType': 'module',
+      'ecmaVersion': 8,
+      'requireConfigFile': false
     },
     plugins: [
         'compat'
