@@ -1,4 +1,4 @@
-# Laravel Mix & Tailwind CSS Starter config
+# Laravel Mix, Tailwind CSS + htmx starter config
 
 A solid platform for front-end development. Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
 
@@ -7,7 +7,7 @@ A solid platform for front-end development. Inspired by [Agency Webpack Mix Conf
 * [htmx](https://htmx.org/) coupled with a minimalistic JS component loader to enable SPA-like full-page transitions with memory efficient mounting/unmounting of scripts across htmx swaps
 * JS components can be lazyloaded as they enter the DOM and use loading strategies including `visible`, `idle` and `media`
 * Framework agnostic - works with vanilla JS, Vue, jQuery, GSAP, Alpine.js or your framework of choice; any third party script can be integrated into the simple component lifecycle
-* Tailwind CSS (JIT mode)
+* [Tailwind CSS](https://tailwindcss.com/) (JIT mode)
 * SASS auto compiling, prefixing, minifying and sourcemaps
 * CSS Autoprefixer, PostCSS Preset Env for older browsers
 * Polyfills for older browsers (Core-Js 3)  
