@@ -9,6 +9,7 @@ import LoadComponents from './loadComponents';
 
 /* global component imports */
 import LazysizesInit from '../components/global/lazysizesInit';
+import Menu from '../components/global/menu';
 import Metadata from '../components/global/metadata';
 import ResizeDone from '../components/global/resizeDone';
 import SvgIconSprite from '../components/global/svgIconSprite';
@@ -28,6 +29,7 @@ export default class Start {
     // - or, they update their state by using their own DOM mutation observer
     globalComponents() {
         new LazysizesInit();
+        new Menu();
         new Metadata();
         new ResizeDone();
         new SvgIconSprite();

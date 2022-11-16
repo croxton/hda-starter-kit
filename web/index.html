@@ -7,23 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/dist/main.css">
-    <script src="https://cdn.jsdelivr.net/gh/croxton/htmx@8559eb/src/htmx.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/bigskysoftware/htmx@e2ecde/src/htmx.min.js"></script>
+    <script defer src="/dist/manifest.js"></script>
+    <script defer src="/dist/vendor.js"></script>
+    <script defer src="/dist/main.js"></script>
 </head>
 <body class="ltr" data-icons="/dist/sprite.svg">
 
 <header id="header">
+
     <h1 class="text-2xl bg-gray-900 text-white antialiased p-6 mb-4">Laravel Mix, Tailwind CSS + htmx starter</h1>
 
-    <nav hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:#header:top">
-        <ul class="flex p-12">
+    <nav hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML show:#header:top" hx-indicator="body">
+        <ul class="c-menu flex p-12">
             <li class="mr-6">
-                <a class="text-blue-500 hover:text-blue-800" href="index.html">Page 1</a>
+                <a class="text-blue-500 hover:text-blue-800" href="/index.html">Page 1</a>
             </li>
             <li class="mr-6">
-                <a class="text-blue-500 hover:text-blue-800" href="page2.html">Page 2</a>
+                <a class="text-blue-500 hover:text-blue-800" href="/page2.html">Page 2</a>
             </li>
             <li class="mr-6">
-                <a class="text-blue-500 hover:text-blue-800" href="page3.html">Page 3</a>
+                <a class="text-blue-500 hover:text-blue-800" href="/page3.html">Page 3</a>
             </li>
         </ul>
     </nav>
@@ -33,14 +37,12 @@
 
     <div id="box" class="relative overflow-hidden o-viewport o-viewport-1/1 md:o-viewport-4/1 bg-blue-500 flex justify-center items-center transition-colors duration-1000">
         <h2 class="relative z-10 text-2xl text-white">Page 1</h2>
-        <img class="lazyload object-cover w-full h-full absolute inset-0" src="https://img.freepik.com/free-photo/beautiful-aerial-shot-fronalpstock-mountains-switzerland-beautiful-pink-blue-sky_181624-9315.jpg?w=2000&t=st=1666631777~exp=1666632377~hmac=fe2e21593130cc3ea65bdaf5f3315f4c31db89f6d04aea5572a9349268ebba58" alt="">
+        <img class="lazyload object-cover w-full h-full absolute inset-0" data-src="https://img.freepik.com/free-photo/beautiful-aerial-shot-fronalpstock-mountains-switzerland-beautiful-pink-blue-sky_181624-9315.jpg?w=2000&t=st=1666631777~exp=1666632377~hmac=fe2e21593130cc3ea65bdaf5f3315f4c31db89f6d04aea5572a9349268ebba58" alt="">
     </div>
 
 </main>
 
-<!-- Webpack -->
-<script src="/dist/manifest.js"></script>
-<script src="/dist/vendor.js"></script>
-<script src="/dist/main.js"></script>
+<!-- page transition loading bar -->
+<div id="transition" class="c-transition"></div>
 </body>
 </html>
