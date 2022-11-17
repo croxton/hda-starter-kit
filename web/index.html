@@ -11,6 +11,7 @@
     <script defer src="/dist/manifest.js"></script>
     <script defer src="/dist/vendor.js"></script>
     <script defer src="/dist/main.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="ltr" data-icons="/dist/sprite.svg">
 
@@ -39,6 +40,54 @@
         <h2 class="relative z-10 text-2xl text-white">Page 1</h2>
         <img class="lazyload object-cover w-full h-full absolute inset-0" data-src="https://img.freepik.com/free-photo/beautiful-aerial-shot-fronalpstock-mountains-switzerland-beautiful-pink-blue-sky_181624-9315.jpg?w=2000&t=st=1666631777~exp=1666632377~hmac=fe2e21593130cc3ea65bdaf5f3315f4c31db89f6d04aea5572a9349268ebba58" alt="">
     </div>
+
+    <section>
+
+        <!-- specify a unique ID for each Alpine component you use -->
+        <div hx-history-pristine class="container text-grey mx-auto px-2 py-2" x-data="{
+            init() {
+                console.log('Here we go!')
+            },
+            faqs: [
+                {
+                    question: 'Why do I need Alpine JS?',
+                    answer: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores iure quas laudantium dicta impedit, est id delectus molestiae deleniti enim nobis rem et nihil.',
+                    isOpen: true,
+                },
+                {
+                    question: 'Why am I so awesome?',
+                    answer: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi cumque, nulla harum aspernatur veniam ullam provident neque temporibus autem itaque odit.',
+                    isOpen: false,
+                },
+                {
+                    question: 'Why learn on Scrimba?',
+                    answer: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi cumque, nulla harum aspernatur veniam ullam provident neque temporibus autem itaque odit.',
+                    isOpen: false,
+                },
+            ]
+        }">
+            <h2 class="text-2xl font-bold">FAQs</h2>
+            <div class="leading-loose text-lg mt-6">
+                <template x-for="(faq, index) in faqs" :key="faq.question">
+                    <div>
+                        <button class="w-full font-bold py-3 flex justify-between items-center mt-4" :class="index !== faqs.length - 1 && 'border-b border-gray-400'" @click="faqs = faqs.map(f => ({ ...f, isOpen: f.question !== faq.question ? false : !f.isOpen}))">
+                            <!-- Specs has it that only one component can be open at a time and also you should be able to toggle the open state of the active component too -->
+                            <div x-text="faq.question"></div>
+                            <svg x-show="!faq.isOpen" class="fill-current" viewBox="0 0 24 24" width="24" height="24">
+                                <path class="heroicon-ui" d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-2a8 8 0 100-16 8 8 0 000 16zm1-9h2a1 1 0 010 2h-2v2a1 1 0 01-2 0v-2H9a1 1 0 010-2h2V9a1 1 0 012 0v2z" />
+                            </svg>
+                            <svg x-show="faq.isOpen" class="fill-current" viewBox="0 0 24 24" width="24" height="24">
+                                <path class="heroicon-ui" d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-2a8 8 0 100-16 8 8 0 000 16zm4-8a1 1 0 01-1 1H9a1 1 0 010-2h6a1 1 0 011 1z" />
+                            </svg>
+                        </button>
+
+                        <div class="text-gray-700 text-sm mt-2" x-text="faq.answer" x-show="faq.isOpen"></div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+    </section>
 
 </main>
 
