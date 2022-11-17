@@ -19,7 +19,7 @@ export default class HtmxInit {
         let historySnapshot, historySnapshotNext;
         let historyEltSelector = '[hx-history-elt]';
 
-        // Take an snapshot of the pristine markup on initial page load
+        // Take a snapshot of the pristine markup on initial page load
         // before it had been manipulated by JS
         let historyElt = document.querySelector(historyEltSelector);
         if (historyElt) {
@@ -38,16 +38,21 @@ export default class HtmxInit {
         });
 
         htmx.on('htmx:beforeHistorySave', (event) => {
-            // restore the pristine dom state before htmx saves it to the history cache (localStorage)
+            // Restore the pristine dom state of elements inside a container with attribute [hx-history-pristine]
+            // before htmx saves it to the history cache (localStorage)
             if (historySnapshot) {
-                let historyElt = document.querySelector(historyEltSelector);
-                if (historyElt) {
-                    historyElt.innerHTML = historySnapshot;
-                    if (historySnapshotNext) {
-                        historySnapshot = historySnapshotNext;
-                    } else {
-                        historySnapshot = null;
+                let markers = document.querySelectorAll(historyEltSelector + ' [hx-history-preserve]');
+                let pristineDom = new DOMParser().parseFromString(historySnapshot, "text/html");
+                let replace = pristineDom.querySelectorAll('[hx-history-pristine]');
+                for (let i = 0; i < markers.length; ++i) {
+                    if (replace[i] !== undefined) {
+                        markers[i].innerHTML = replace[i].innerHTML;
                     }
+                }
+                if (historySnapshotNext) {
+                    historySnapshot = historySnapshotNext;
+                } else {
+                    historySnapshot = null;
                 }
             }
         });
