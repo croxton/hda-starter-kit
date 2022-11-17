@@ -43,7 +43,7 @@ export default class HtmxInit {
             if (historySnapshot) {
                 let markers = document.querySelectorAll(historyEltSelector + ' [hx-history-preserve]');
                 let pristineDom = new DOMParser().parseFromString(historySnapshot, "text/html");
-                let replace = pristineDom.querySelectorAll('[hx-history-pristine]');
+                let replace = pristineDom.querySelectorAll('[hx-history-preserve]');
                 for (let i = 0; i < markers.length; ++i) {
                     if (replace[i] !== undefined) {
                         markers[i].innerHTML = replace[i].innerHTML;
