@@ -6,7 +6,7 @@ Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-w
 
 * [Laravel Mix 6](https://laravel-mix.com/) / [Webpack 5](https://webpack.js.org/) / [PostCSS 8](https://postcss.org/)
 * Development proxy with script and style injection (HMR, file watching)
-* [htmx](https://htmx.org/) for HTMl-over-the-wire 
+* [htmx](https://htmx.org/) for HTML-over-the-wire 
 * [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS
 * [Alpine.js](https://alpinejs.dev/) for composing behaviour directly in the markup
 * Minimalistic JavaScript framework for vanilla JS components:
