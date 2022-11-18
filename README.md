@@ -1,15 +1,17 @@
-# Laravel Mix, Tailwind CSS + htmx starter config
+# Laravel Mix, Tailwind CSS, Alpine.js + htmx starter config
 
 A solid platform for front-end development, following the [Hypermedia Driven Application (HDA)](https://htmx.org/essays/hypermedia-driven-applications/) architecture.
 
 Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
 
-* Laravel Mix 6 / Webpack 5 / PostCSS 8
+* [Laravel Mix 6](https://laravel-mix.com/) / [Webpack 5](https://webpack.js.org/) / [PostCSS 8](https://postcss.org/)
 * Development proxy with script and style injection (HMR, file watching)
-* [htmx](https://htmx.org/) coupled with a minimalistic JS component loader to facilitate SPA-like full-page transitions with memory efficient mounting/unmounting of scripts across htmx swaps
-* JS components can be lazyloaded as they enter the DOM and use loading strategies including `visible`, `idle` and `media`
-* Framework-agnostic - works with vanilla JS, Vue, jQuery, GSAP, Alpine.js or your framework of choice; any third party script can be integrated into the simple component lifecycle
-* [Tailwind CSS](https://tailwindcss.com/) (JIT mode)
+* [htmx](https://htmx.org/) for HTMl-over-the-wire 
+* [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS
+* [Alpine.js](https://alpinejs.dev/) for composing behaviour directly in the markup
+* Minimalistic JavaScript framework for vanilla JS components:
+  * Components can be lazyloaded as they enter the DOM and use loading strategies including `visible`, `idle` and `media`
+  * Framework-agnostic - works with vanilla JS, Vue, jQuery, GSAP, Alpine.js or your framework of choice; any third party script can be integrated into the simple component lifecycle
 * SASS auto compiling, prefixing, minifying and sourcemaps
 * CSS Autoprefixer, PostCSS Preset Env for older browsers
 * Polyfills for older browsers (Core-Js 3)  
