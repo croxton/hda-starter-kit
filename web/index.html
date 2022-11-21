@@ -91,6 +91,21 @@
 
     </section>
 
+    <section class="p-12">
+
+        <header>
+            <h3 class="text-xl">Example Alpine.js async component</h3>
+            <p class="mt-2">Load components asynchronously on-demand, using <a href="https://async-alpine.dev/">Async Alpine</a></p>
+        </header>
+
+        <div
+            ax-load="visible"
+            x-data="message('Component loaded with Async Alpine using the `visible` strategy')"
+            x-ignore
+            class="bg-yellow-200 p-8 mt-4"
+        ></div>
+    </section>
+
 </main>
 
 <!-- page transition loading bar -->

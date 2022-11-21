@@ -6,6 +6,8 @@
 
 /* component lazy loader */
 import LoadComponents from './loadComponents';
+import AsyncAlpine from 'async-alpine';
+import Alpine from 'alpinejs'
 
 /* global component imports */
 import LazysizesInit from '../components/global/lazysizesInit';
@@ -22,6 +24,7 @@ export default class Start {
     constructor() {
         this.globalComponents();
         this.localComponents();
+        this.alpineComponents();
     }
 
     // Components that only need to be initialised ONCE on initial full page load:
@@ -40,5 +43,14 @@ export default class Start {
     // - an optional loading strategy (idle | media | visible)
     localComponents() {
         this.componentLoader.load('share', '[data-share]', 'visible');
+    }
+
+    // Asynchronous Alpine components
+    // @see https://async-alpine.dev/
+    alpineComponents() {
+        AsyncAlpine.init(Alpine);
+        AsyncAlpine.data("message", () => import("../components/alpine/message.js"));
+        AsyncAlpine.start();
+        Alpine.start();
     }
 }
