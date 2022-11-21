@@ -12,6 +12,7 @@
 /* import framework */
 import HtmxInit from './framework/htmxInit';
 import Start from './framework/start';
+import Alpine from 'alpinejs'
 
 // .no-js to .js
 let html = document.getElementsByTagName("html")[0];
@@ -24,6 +25,10 @@ if (typeof htmx != "undefined") {
 
 // Bootstrap our js framework
 const start = new Start();
+
+// Start Alpine
+window.Alpine = Alpine;
+Alpine.start();
 
 // Accept HMR
 // https://webpack.js.org/api/hot-module-replacement#accept

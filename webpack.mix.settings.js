@@ -48,8 +48,9 @@ module.exports = {
 
     // Shared vendor modules - empty params = separate all *used* node_modules
     vendor: [
+        "alpinejs",
         'lazysizes',
-        'lazy-scripts',
-        'pubsub-js'
+        'pubsub-js',
+        'vue',
     ],
 };

@@ -35,19 +35,19 @@
   height: var(--size);
   margin: var(--m);
   outline: none;
-  width: var(--size);
   transition: background-color 0.3s linear;
+  width: var(--size);
 }
 
 [data-share-item] i {
   background-color: var(--icon-bgc);
   display: inline-block;
   height: 100%;
-  mask: no-repeat center center/var(--icon-size) var(--icon);
   -webkit-mask: no-repeat center center/var(--icon-size) var(--icon);
+  mask: no-repeat center center/var(--icon-size) var(--icon);
+  mask-size: 1em;
   width: 100%;
   --icon-bgc: #FFF;
-  mask-size: 1em;
 }
 
 [data-share-item]:focus,

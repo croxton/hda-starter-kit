@@ -1,13 +1,13 @@
 .c-transition {
-  position:fixed;
   bottom:0;
   left:0;
   opacity:0;
+  position:fixed;
   right:0;
   top:0;
   transition-duration:400ms;
-  transition-timing-function:cubic-bezier(.19,1,.22,1);
   transition-property:visibility,opacity;
+  transition-timing-function:cubic-bezier(.19,1,.22,1);
   visibility:hidden;
   z-index:999;
   // If you want to fade out/in the page between transitions:
@@ -18,27 +18,27 @@
 .htmx-added .c-transition,
 .htmx-settling .c-transition,
 .htmx-swapping .c-transition {
-  visibility:visible;
   opacity:1;
+  visibility:visible;
 }
 
 .c-transition::after{
-  content:"";
-  position:absolute;
-  top:0;
-  right:0;
-  left:0;
-  width:100%;
-  height:4px;
-  background-color:theme('colors.red.500');
   animation-duration:2s;
   animation-timing-function:cubic-bezier(.16,1,.3,1);
+  background-color:theme('colors.red.500');
+  content:"";
+  height:4px;
+  left:0;
+  position:absolute;
+  right:0;
+  top:0;
+  width:100%;
 }
 
 .htmx-request .c-transition::after {
-  width:100%;
   animation-duration:10s;
   animation-name:transition;
+  width:100%;
 }
 
 @keyframes transition{
