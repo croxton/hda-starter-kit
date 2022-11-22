@@ -34,181 +34,23 @@
 
 <main id="main" hx-history-elt>
 
+
     <div id="box" class="o-viewport o-viewport-1/1 md:o-viewport-4/1 text-white bg-green-500 flex justify-center items-center transition-colors duration-1000">
         <h2 class="text-2xl text-white">Page 2</h2>
     </div>
 
-    <section class="p-12 space-y-12">
+    <section class="p-12">
 
-        <header class="prose">
-            <h3 class="text-xl">Example Alpine.js component: search</h3>
-            <p class="mt-2">Always use inline directives over runtime declarations, for example use <code class="bg-yellow-100 px-1 inline-block">x‑data</code> over <code class="bg-yellow-100 px-1 inline-block">Alpine.data</code>.</p>
+        <header>
+            <h3 class="text-xl">Example Vue Single File Component (SFC)</h3>
+            <p class="mt-2">Each component is mounted to the root element as a Vue application instance. Pass props to the component as <code class="bg-yellow-100 px-1 inline-block">data-</code> attributes on the root element. Components can be loaded on demand using strategies.</p>
         </header>
 
-        <div hx-history-preserve x-data='{
-            isOpen: false,
-            search: "",
+        <h4 class="text-lg font-bold mt-12 mb-2">London</h4>
+        <div data-location-map data-latitude="51.509865" data-longitude="-0.118092"></div>
 
-            get getItems() {
-                const filterItems = this.sourceData.filter((item) => {
-                    return item.employee_name.toLowerCase().startsWith(this.search.toLowerCase())
-                })
-
-                if (filterItems.length < this.sourceData.length && filterItems.length > 0) {
-                    this.isOpen = true
-                    return filterItems
-                } else {
-                    this.isOpen = false
-                }
-            },
-
-            cleanSearch(e) {
-                alert(e.target.innerText)
-                this.search = ""
-            },
-
-            closeSearch() {
-                this.search = ""
-                this.isOpen = false
-            },
-
-            sourceData: [
-            {
-                id: "1",
-                employee_name: "Tiger Nixon",
-                profile_image: "https://randomuser.me/api/portraits/men/1.jpg",
-            },
-            {
-                id: "2",
-                employee_name: "Garrett Winters",
-                profile_image: "https://randomuser.me/api/portraits/men/2.jpg",
-            },
-            {
-                id: "3",
-                employee_name: "Ashton Cox",
-                profile_image: "https://randomuser.me/api/portraits/men/3.jpg",
-            },
-            {
-                id: "4",
-                employee_name: "Cedric Kelly",
-                profile_image: "https://randomuser.me/api/portraits/men/4.jpg",
-            },
-            {
-                id: "5",
-                employee_name: "Airi Satou",
-                profile_image: "https://randomuser.me/api/portraits/women/5.jpg",
-            },
-            {
-                id: "6",
-                employee_name: "Brielle Williamson",
-                profile_image: "https://randomuser.me/api/portraits/women/6.jpg",
-            },
-            {
-                id: "7",
-                employee_name: "Herrod Chandler",
-                profile_image: "https://randomuser.me/api/portraits/men/7.jpg",
-            },
-            {
-                id: "8",
-                employee_name: "Rhona Davidson",
-                profile_image: "https://randomuser.me/api/portraits/women/8.jpg",
-            },
-            {
-                id: "9",
-                employee_name: "Colleen Hurst",
-                profile_image: "https://randomuser.me/api/portraits/women/9.jpg",
-            },
-            {
-                id: "10",
-                employee_name: "Sonya Frost",
-                profile_image: "https://randomuser.me/api/portraits/women/10.jpg",
-            },
-            {
-                id: "11",
-                employee_name: "Jena Gaines",
-                profile_image: "https://randomuser.me/api/portraits/women/11.jpg",
-            },
-            {
-                id: "12",
-                employee_name: "Quinn Flynn",
-                profile_image: "https://randomuser.me/api/portraits/men/12.jpg",
-            },
-            {
-                id: "13",
-                employee_name: "Charde Marshall",
-                profile_image: "https://randomuser.me/api/portraits/women/12.jpg",
-            },
-            {
-                id: "14",
-                employee_name: "Haley Kennedy",
-                profile_image: "https://randomuser.me/api/portraits/women/14.jpg",
-            },
-            {
-                id: "15",
-                employee_name: "Tatyana Fitzpatrick",
-                profile_image: "https://randomuser.me/api/portraits/women/15.jpg",
-            },
-            {
-                id: "16",
-                employee_name: "Michael Silva",
-                profile_image: "https://randomuser.me/api/portraits/men/16.jpg",
-            },
-            {
-                id: "17",
-                employee_name: "Paul Byrd",
-                profile_image: "https://randomuser.me/api/portraits/men/17.jpg",
-            },
-            {
-                id: "18",
-                employee_name: "Gloria Little",
-                profile_image: "https://randomuser.me/api/portraits/women/18.jpg",
-            },
-            {
-                id: "19",
-                employee_name: "Bradley Greer",
-                profile_image: "https://randomuser.me/api/portraits/men/19.jpg",
-            },
-            {
-                id: "20",
-                employee_name: "Dai Rios",
-                profile_image: "https://randomuser.me/api/portraits/men/20.jpg",
-            },
-            {
-                id: "21",
-                employee_name: "Jenette Caldwell",
-                profile_image: "https://randomuser.me/api/portraits/women/21.jpg",
-            },
-            {
-                id: "22",
-                employee_name: "Yuri Berry",
-                profile_image: "https://randomuser.me/api/portraits/men/22.jpg",
-            },
-            {
-                id: "23",
-                employee_name: "Caesar Vance",
-                profile_image: "https://randomuser.me/api/portraits/men/23.jpg",
-            },
-            {
-                id: "24",
-                employee_name: "Doris Wilder",
-                profile_image: "https://randomuser.me/api/portraits/women/24.jpg",
-                },
-            ]
-            }'>
-            <details class="c-search__item" role="list" :open="isOpen">
-                <summary aria-haspopup="listbox" class="appearance-none list-none">
-                    <input class="p-2 border border-gray-400 rounded w-full text-gray-600 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" type="text" @input="getItems" placeholder="search ..." x-model="search">
-                </summary>
-                <ul class="border border-200 rounded p-2 shadow-xl max-h-64 overflow-y-scroll" role="listbox" x-on:click.outside="closeSearch">
-                    <template x-for="item in getItems" :key="item.id">
-                        <li class="p-2 flex flow-row justify-center items-center">
-                            <img class="w-16 h-16 rounded shadow-lg mr-2" :src="item.profile_image" alt="">
-                            <a class="text-lg text-gray-700 w-full flex flex-row items-center cursor-pointer" x-text="item.employee_name" x-on:click="cleanSearch"></a>
-                        </li>
-                    </template>
-                </ul>
-            </details>
-        </div>
+        <h4 class="text-lg font-bold mt-12 mb-2">New York</h4>
+        <div data-location-map data-latitude="40.730610" data-longitude="-73.935242"></div>
 
     </section>
 </main>

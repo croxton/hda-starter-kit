@@ -43,7 +43,7 @@ export default class Start {
     // - an optional loading strategy (idle | media | visible)
     localComponents() {
         this.componentLoader.load('share', '[data-share]', 'visible');
-        this.componentLoader.load('locationMap', '[data-location-map]');
+        this.componentLoader.load('locationMap', '[data-location-map]', 'visible');
     }
 
     // Asynchronous Alpine components
