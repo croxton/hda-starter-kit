@@ -25,6 +25,7 @@ export default class Start {
         this.globalComponents();
         this.localComponents();
         this.alpineComponents();
+        this.vueComponents();
     }
 
     // Components that only need to be initialised ONCE on initial full page load:
@@ -43,7 +44,6 @@ export default class Start {
     // - an optional loading strategy (idle | media | visible)
     localComponents() {
         this.componentLoader.load('share', '[data-share]', 'visible');
-        this.componentLoader.load('locationMap', '[data-location-map]', 'visible');
     }
 
     // Asynchronous Alpine components
@@ -53,5 +53,10 @@ export default class Start {
         AsyncAlpine.data("message", () => import("../components/alpine/message.js"));
         AsyncAlpine.start();
         Alpine.start();
+    }
+
+    // Vue SFCs
+    vueComponents() {
+        this.componentLoader.load('vueBridge', '[data-vue-component]');
     }
 }
