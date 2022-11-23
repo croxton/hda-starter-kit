@@ -1,10 +1,6 @@
 import BaseComponent from '../../framework/baseComponent';
-
 import { createApp } from 'vue'
 import * as strategies from '../../strategies/index.js';
-
-// import our map component
-//import App from '../vue/LocationMap.vue';
 
 export default class VueBridge extends BaseComponent {
 
@@ -16,7 +12,14 @@ export default class VueBridge extends BaseComponent {
     }
 
     mount() {
-        // attach to root element
+
+        // @see https://vuejs.org/guide/essentials/application.html#multiple-application-instances
+        // "If you are using Vue to enhance server-rendered HTML and only need Vue to control
+        // specific parts of a large page, avoid mounting a single Vue application instance
+        // on the entire page. Instead, create multiple small application instances and
+        // mount them on the elements they are responsible for."
+
+        // We'll create a new Vue application instance for each of the vue component placeholders in the page
         const vueComponents = document.querySelectorAll(this.elm);
         for(let el of vueComponents) {
 
@@ -32,6 +35,8 @@ export default class VueBridge extends BaseComponent {
         if (this.mounted) {
             // remove instances to release memory
             this.vueInstances.forEach( (instance) =>{
+                // note: this will throw an error if you remove elements
+                // *inside* the root element after Vue has mounted
                 instance.unmount();
             });
 
@@ -42,7 +47,8 @@ export default class VueBridge extends BaseComponent {
     }
 
     /**
-     * Import a component on demand
+     * Import a Vue component on demand, optionally using a loading strategy
+     * (These are the same strategies provided by Async Alpine)
      *
      * @param el
      */
@@ -102,7 +108,6 @@ export default class VueBridge extends BaseComponent {
                 '../vue/' + el.dataset.vueComponent + '.vue'
                     ).then((vueComponent) => {
                     let app = createApp(vueComponent.default, { ...el.dataset });
-                    console.log('mount vue component to ' + el.id);
                     app.mount(el);
                     this.vueInstances.push(app);
                 });

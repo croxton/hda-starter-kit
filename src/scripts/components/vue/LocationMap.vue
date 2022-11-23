@@ -13,6 +13,7 @@
     />
     <l-marker :lat-lng="[latitude,longitude]" />
   </l-map>
+  <map-caption :caption="caption"></map-caption>
 </template>
 
 <script>
@@ -24,16 +25,20 @@ import {
   LIcon
 } from "@vue-leaflet/vue-leaflet";
 
+import MapCaption from './MapCaption.vue'
+
 export default {
   components: {
     LMap,
     LTileLayer,
     LMarker,
-    LIcon
+    LIcon,
+    MapCaption
   },
   props: {
     latitude: Number,
-    longitude: Number
+    longitude: Number,
+    caption: String
   },
   data() {
     return {

@@ -24,7 +24,7 @@ export default class Start {
     constructor() {
         this.globalComponents();
         this.localComponents();
-        this.alpineComponents();
+        this.asyncAlpineComponents();
         this.vueComponents();
     }
 
@@ -48,7 +48,7 @@ export default class Start {
 
     // Asynchronous Alpine components
     // @see https://async-alpine.dev/
-    alpineComponents() {
+    asyncAlpineComponents() {
         AsyncAlpine.init(Alpine);
         AsyncAlpine.data("message", () => import("../components/alpine/message.js"));
         AsyncAlpine.start();
