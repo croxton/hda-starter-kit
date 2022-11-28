@@ -2,7 +2,7 @@
 
 A solid platform for front-end development, following the [Hypermedia Driven Application (HDA)](https://htmx.org/essays/hypermedia-driven-applications/) architecture and the [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) (LoB) principle.
 
-Includes a working demo featuring full page transitions and example `Alpine.js`, `Vue 3` and vanilla components.
+Includes a working demo featuring full page transitions and example `Alpine.js`, `Vue 3` and vanilla JS components.
 
 * [Laravel Mix 6](https://laravel-mix.com/) / [Webpack 5](https://webpack.js.org/) / [PostCSS 8](https://postcss.org/) - provides a robust ES6 development environment with script and style injection (HMR, file watching)
 * [htmx](https://htmx.org/) for HTML-over-the-wire 
@@ -71,17 +71,17 @@ Our aim is to keep markup and logic (styling / scripting) together in one file, 
 This framework gives you the flexibility to find a pragmatic balance between Locality of Behaviour (LoB) and Separation of Concerns (SoC) that suits your project and preferences.
 
 ## Styling
-While the bulk of CSS styles can exist as Tailwind CSS classes, you may find you need to create bespoke CSS classes for UI states that can't easily be expressed with Tailwind. This starter allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
+You may find you need to create bespoke styles for UI states that can't easily be expressed with Tailwind CSS classes. This starter allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
 
-* Settings – global variables, config switches etc.
-* Functions – globally used functions.
-* Mixins – globally used mixins.
-* Base – styling for bare HTML elements (like BODY, H1, A, etc.).
-* Objects – class-based selectors which define undecorated, design patterns, intended to be reusable between projects (e.g. `.o-ratio`).
-* Layouts – layout grids and containers (e.g. `.l-container`).
-* Vendor - third party component stylesheets
-* Components – specific UI components  (e.g. `.c-button`).
-* Utils – utilities and helper classes with ability to override anything which goes before (e.g. `.h1`).
+* **Settings** – global variables, config switches etc.
+* **Functions** – globally used functions.
+* **Mixins** – globally used mixins.
+* **Base** – styling for bare HTML elements (like BODY, H1, A, etc.).
+* **Objects** – class-based selectors which define undecorated, design patterns, intended to be reusable between projects (e.g. `.o-ratio`).
+* **Layouts** – layout grids and containers (e.g. `.l-container`).
+* **Vendor** - third party component stylesheets
+* **Components** – specific UI components  (e.g. `.c-button`).
+* **Utils** – utilities and helper classes with ability to override anything which goes before (e.g. `.h1`).
 
 ## Scripting
 `Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may want to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This starter allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
@@ -90,10 +90,10 @@ While the bulk of CSS styles can exist as Tailwind CSS classes, you may find you
 This file controls which components you wish to load, and the selectors they map to.
 
 ####  `globalComponents()`
-These are loaded once, on the initial page load. They manage things like the main menu state, `<head>` metadata and window resizes that don't change between page swaps. Create global components in `framework/components/global`.
+Global components are loaded once on initial page load. They manage the state of site-wide elements and behaviours like the main menu, `<head>` metadata and window resize events. Create global components in `framework/components/global`.
 
 #### `localComponents()`
-Vanilla JS components loaded on demand in content swapped by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom, typically via a `data-` attribute selector. For example, a component matching the `[data-share]` selector that is loaded when it becomes visible in the viewport:
+Vanilla JS components loaded on demand in any content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom, typically via a `data-` attribute selector. For example, a component matching the `[data-share]` selector that is loaded when it becomes visible in the viewport:
 
 In `start.js`:
 
@@ -112,7 +112,7 @@ In your html:
 </div>
 ```
 
-If the element contains markup that is manipulated by the component you have created, you can preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-carousel]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel:
+If the element contains markup that is manipulated by the component you have created, preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-carousel]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel:
 
 ```html
 <div class="swiper" data-carousel="gallery" hx-history-preserve>
@@ -128,7 +128,7 @@ If the element contains markup that is manipulated by the component you have cre
 Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
 
 #### `asyncAlpineComponents()`
-Asynchronous Alpine components loaded anywhere in your markup. Create Alpine components in `framework/components/alpine`. See `components/alpine/message.js` for an example.
+Asynchronous Alpine components can be loaded anywhere in your markup. Create Alpine components in `framework/components/alpine`. See `components/alpine/message.js` for an example.
 
 In `start.js`:
 
