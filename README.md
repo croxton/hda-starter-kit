@@ -70,20 +70,20 @@ Our aim is to keep markup and logic (styling / scripting) together in one file, 
 
 This framework gives you the flexibility to find a pragmatic balance between Locality of Behaviour (LoB) and Separation of Concerns (SoC) that suits your project and preferences.
 
-### Styling
+## Styling
 While the bulk of CSS styles can exist as Tailwind CSS classes, you may find you need to create bespoke CSS classes for UI states that can't easily be expressed with Tailwind. This starter allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
 
-### Scripting
-`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may want to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This starter allows you to use Alpine Async components, Vue SFCs or keep things simple and create your own vanilla JS components. The later can be used to load complex third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount` / `unmount` lifecycle.
+## Scripting
+`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may want to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This starter allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
 
-#### `framework/start.js`
+### `framework/start.js`
 This file controls which components you wish to load, and the selectors they map to.
 
-#####  `globalComponents()`
+####  `globalComponents()`
 These are loaded once, on the initial page load. They manage things like the main menu state, `<head>` metadata and window resizes that don't change between page swaps. Create global components in `framework/components/global`.
 
-##### `localComponents()`
-Vanilla Js components loaded on demand in content swapped by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom, typically a `data-` attribute selector. For example, a component matching the `[data-share]` selector loaded when it becomes visible in the viewport:
+#### `localComponents()`
+Vanilla JS components loaded on demand in content swapped by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom, typically via a `data-` attribute selector. For example, a component matching the `[data-share]` selector that is loaded when it becomes visible in the viewport:
 
 In `start.js`:
 
@@ -117,7 +117,7 @@ If the element contains markup that is manipulated by the component you have cre
 
 Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
 
-##### `asyncAlpineComponents()`
+#### `asyncAlpineComponents()`
 Asynchronous Alpine components loaded anywhere in your markup. Create Alpine components in `framework/components/alpine`. See `components/alpine/message.js` for an example.
 
 In `start.js`:
@@ -137,7 +137,7 @@ In your html:
 
 For instructions see [Async Alpine](https://github.com/Accudio/async-alpine).
 
-##### `vueComponents()`
+#### `vueComponents()`
 Vue components loaded on demand in content swapped by htmx, such as `<main>`. Create components in `framework/components/vue`, and attach to elements with `data-vue-component="MyComponent"`. Determine the loading strategy for the component with `data-load=""`, and pass props via additional `data-` attributes.
 
 No initialisation step is required for Vue components, they are loaded and mounted automatically on demand as individual Vue application instances.
@@ -157,45 +157,45 @@ See `components/vue/LocationMap.js` for an example.
 
 For more, see [Vue SFCs](https://vuejs.org/guide/scaling-up/sfc.html)
 
-#### Loading strategies
+### Loading strategies
 Components support the following loading strategies. The loading strategy for local components is determined in `start.js`. Alpine components can use the `ax-load` attribute directly in the markup, and vue components can use the `data-load` attribute. The default strategy is `eager`
 
-##### Eager
+#### Eager
 The default strategy if not specified. If the component is present in the page on initial load, or in the content swapped into the page by htmx, it will be loaded and mounted immediately.
 
-##### Visible
+#### Visible
 Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses
 
 ```js
 this.componentLoader.load('share', '[data-share]', 'visible (100px 100px 100px 100px)');
 ```
 
-##### Media
+#### Media
 The component will be loaded when the provided media query evaluates as true.
 
 ```js
 this.componentLoader.load('share', '[data-share]', 'media (max-width: 820px)');
 ```
 
-##### Idle
+#### Idle
 Uses requestIdleCallback (where supported) to load when the main thread is less busy.
 
 ```js
 this.componentLoader.load('share', '[data-share]', 'idle');
 ```
 
-##### Event
+#### Event
 Alpine async components only. The component won't be loaded until it receives the `async-alpine:load` event on window. Provide the id of the component in `detail.id`. See: https://async-alpine.dev/docs/strategies/#event
  
 
-##### Combined strategies
+#### Combined strategies
 Strategies can be combined by separating with a pipe |, allowing for advanced and complex code splitting:
 
 ```js
 this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-width: 1024px)');
 ```
 
-#### Event bus
+### Event bus
 For communication *between* components, this kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library.
 
 
