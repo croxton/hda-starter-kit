@@ -210,11 +210,11 @@ For communication *between* components, this kit comes with [PubSubJS](https://g
 
 Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
 
-`components/local/myThing.js`:
-
 ```html
 <div data-thing></div>
 ```
+
+`components/local/myThing.js`:
 
 ```js
 import BaseComponent from '../../framework/baseComponent';
@@ -242,6 +242,12 @@ export default class MyThing extends BaseComponent {
     }
 }
 ```
+
+`framework/start.js`:
+
+```js
+this.componentLoader.load('thing', '[data-thing]', 'visible');
+````
 
 ## Thank you
 Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
