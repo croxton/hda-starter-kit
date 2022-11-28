@@ -73,6 +73,16 @@ This framework gives you the flexibility to find a pragmatic balance between Loc
 ## Styling
 While the bulk of CSS styles can exist as Tailwind CSS classes, you may find you need to create bespoke CSS classes for UI states that can't easily be expressed with Tailwind. This starter allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
 
+* Settings – global variables, config switches etc.
+* Functions – globally used functions.
+* Mixins – globally used mixins.
+* Base – styling for bare HTML elements (like BODY, H1, A, etc.).
+* Objects – class-based selectors which define undecorated, design patterns, intended to be reusable between projects (e.g. `.o-ratio`).
+* Layouts – layout grids and containers (e.g. `.l-container`).
+* Vendor - third party component stylesheets
+* Components – specific UI components  (e.g. `.c-button`).
+* Utils – utilities and helper classes with ability to override anything which goes before (e.g. `.h1`).
+
 ## Scripting
 `Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may want to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This starter allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
 
@@ -158,13 +168,13 @@ See `components/vue/LocationMap.js` for an example.
 For more, see [Vue SFCs](https://vuejs.org/guide/scaling-up/sfc.html)
 
 ### Loading strategies
-Components support the following loading strategies. The loading strategy for local components is determined in `start.js`. Alpine components can use the `ax-load` attribute directly in the markup, and vue components can use the `data-load` attribute. The default strategy is `eager`
+Components support the following loading strategies. The loading strategy for local components is determined in `start.js`. Alpine components can use the `ax-load` attribute directly in the markup, and vue components can use the `data-load` attribute. The default strategy is `eager`.
 
 #### Eager
 The default strategy if not specified. If the component is present in the page on initial load, or in the content swapped into the page by htmx, it will be loaded and mounted immediately.
 
 #### Visible
-Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses
+Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses.
 
 ```js
 this.componentLoader.load('share', '[data-share]', 'visible (100px 100px 100px 100px)');
@@ -185,7 +195,7 @@ this.componentLoader.load('share', '[data-share]', 'idle');
 ```
 
 #### Event
-Alpine async components only. The component won't be loaded until it receives the `async-alpine:load` event on window. Provide the id of the component in `detail.id`. See: https://async-alpine.dev/docs/strategies/#event
+Alpine async components only. The component won't be loaded until it receives the `async-alpine:load` event on window. Provide the id of the component in `detail.id`. See: https://async-alpine.dev/docs/strategies/#event.
  
 
 #### Combined strategies
