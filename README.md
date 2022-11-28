@@ -125,8 +125,6 @@ If the element contains markup that is manipulated by the component you have cre
 </div>
 ```
 
-Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
-
 #### `asyncAlpineComponents()`
 Asynchronous Alpine components can be loaded anywhere in your markup. Create Alpine components in `framework/components/alpine`. See `components/alpine/message.js` for an example.
 
@@ -208,6 +206,42 @@ this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-
 ### Event bus
 For communication *between* components, this kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library.
 
+### Creating your own local components
+
+Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
+
+`components/local/myThing.js`:
+
+```html
+<div data-thing></div>
+```
+
+```js
+import BaseComponent from '../../framework/baseComponent';
+
+export default class MyThing extends BaseComponent {
+    
+    constructor(elm) {
+        super(elm);
+        this.mount();
+    }
+
+    mount() {
+        // setup and mount your component
+        let things = document.querySelectorAll(this.elm); // [data-thing]
+        things.forEach(element => {
+            // do stuff to each matching thing
+        });
+    }
+
+    unmount() {
+        if (this.mounted) {
+          // unset references to DOM nodes
+          // and remove any event listeners or observers you created
+        }
+    }
+}
+```
 
 ## Thank you
 Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
