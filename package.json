@@ -1,7 +1,7 @@
 {
-  "name": "laravel-mix-tailwind-starter",
+  "name": "hda-starter-kit",
   "version": "1.0.5",
-  "description": "Laravel Mix, Tailwind, Vue / Vanilla starter",
+  "description": "Hypermedia Driven Application starter kit",
   "main": "tailwind.config.js",
   "scripts": {
     "dev": "npm run clean && mix watch --hot",
