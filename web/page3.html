@@ -43,7 +43,7 @@
         <section class="space-y-12">
 
             <header>
-                <h3 class="text-xl">Example Vanilla JS component</h3>
+                <h3 class="text-xl">Example Vanilla JS component (manually loaded)</h3>
                 <p class="mt-2">Lazyloaded using the 'visible' strategy - will only be loaded when it enters the viewport.</p>
             </header>
 
@@ -53,6 +53,49 @@
                 data-share-device="Share using device sharing"
                 data-share-url="https://mywebsite.com/page2.html">
             </div>
+        </section>
+
+        <section class="space-y-12">
+
+            <header>
+                <h3 class="text-xl">Example Vanilla JS component (automatically loaded)</h3>
+                <p class="mt-2">Auto-loaded components must have a unique ID attribute. The publish/subscribe pattern is used for communication between component instances (playing one video stops other instances playing).</p>
+            </header>
+
+            <div id="video-1" class="c-video relative w-1/2 o-ratio o-ratio-16/9 bg-gray-100" data-component="videoPlayer" data-load="visible" hx-history-preserve>
+                <div class="c-video__poster w-full absolute inset-0 overflow-hidden">
+                    <img
+                        class="object-cover w-full h-full"
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg"
+                        alt="">
+                </div>
+                <button class="c-video__btn flex items-center justify-center text-red-600 absolute z-20 top-1/2 left-1/2 border border-accent rounded-full uppercase transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 transition-all hover:text-white contrast-more:bg-black">
+                    <span class="text-sm md:text-base">Play</span>
+                </button>
+                <div class="c-video__player"
+                     data-class="w-full h-full"
+                     data-src-mp4="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                >
+                </div>
+            </div>
+
+            <div id="video-2" class="c-video relative w-1/2 o-ratio o-ratio-16/9 bg-gray-100" data-component="videoPlayer" data-load="visible" hx-history-preserve>
+                <div class="c-video__poster w-full absolute inset-0 overflow-hidden">
+                    <img
+                        class="object-cover w-full h-full"
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+                        alt="">
+                </div>
+                <button class="c-video__btn flex items-center justify-center text-red-600 absolute z-20 top-1/2 left-1/2 border border-accent rounded-full uppercase transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 transition-all hover:text-white contrast-more:bg-black">
+                    <span class="text-sm md:text-base">Play</span>
+                </button>
+                <div class="c-video__player"
+                     data-class="w-full h-full"
+                     data-src-mp4="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                >
+                </div>
+            </div>
+
         </section>
 
         <section class="space-y-12">

@@ -10,6 +10,7 @@
  */
 
 /* import framework */
+import geteventlisteners from "./framework/geteventlisteners";
 import HtmxInit from './framework/htmxInit';
 import Start from './framework/start';
 

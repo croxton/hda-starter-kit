@@ -1,0 +1,49 @@
+/* ============================================================================
+   COMPONENTS -> VIDEO
+   ========================================================================= */
+
+/**
+ * Video player
+ */
+
+.c-video__poster {
+  transition: opacity 0.5s linear;
+  .c-video.is-active & {
+    opacity:0;
+    pointer-events: none;
+  }
+}
+
+.c-video {
+  & > * {
+    opacity: 0;
+    transition: opacity 0.5s linear;
+  }
+  &.is-ready > * {
+    opacity:1;
+  }
+}
+
+/* if we have a poster image */
+.c-video__poster ~ .c-video__player,
+.c-video.is-ready .c-video__poster ~ .c-video__player {
+  opacity:0;
+  transition-duration: 0s;
+  .c-video.is-active & {
+    opacity:1;
+  }
+}
+
+/* play button */
+.c-video__btn {
+  opacity:0;
+  pointer-events: none;
+  .c-video.is-ready & {
+    opacity:1;
+    pointer-events: auto;
+  }
+  .c-video.is-playing & {
+    opacity:0;
+    pointer-events: none;
+  }
+}

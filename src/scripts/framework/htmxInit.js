@@ -56,6 +56,7 @@ export default class HtmxInit {
                             for (let i = 0; i < markers.length; ++i) {
                                 if (replace[i] !== undefined) {
                                     markers[i].innerHTML = replace[i].innerHTML;
+                                    markers[i].setAttribute('class', replace[i].getAttribute('class'));
                                 }
                             }
                             if (historySnapshotNext) {

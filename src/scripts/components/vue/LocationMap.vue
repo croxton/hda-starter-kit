@@ -36,8 +36,8 @@ export default {
     MapCaption
   },
   props: {
-    latitude: Number,
-    longitude: Number,
+    latitude: String,
+    longitude: String,
     caption: String
   },
   data() {

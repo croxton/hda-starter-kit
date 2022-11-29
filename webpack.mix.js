@@ -150,7 +150,7 @@ mix.polyfill({
  * https://laravel-mix.com/docs/6.0/autoloading
  */
 mix.autoload({
-    jquery: ["$", "jQuery", "window.jQuery"],
+    //jquery: ["$", "jQuery", "window.jQuery"],
 });
 
 /**

@@ -68,6 +68,7 @@ export default class VueBridge extends BaseComponent {
                 '../vue/' + el.dataset.vueComponent + '.vue'
                     ).then((vueComponent) => {
                     let app = createApp(vueComponent.default, { ...el.dataset });
+                    app.config.warnHandler = () => null;
                     app.mount(el);
                     this.vueInstances.push(app);
                     console.log('mounted ' + el.id);

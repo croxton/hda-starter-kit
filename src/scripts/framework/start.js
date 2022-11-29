@@ -43,6 +43,11 @@ export default class Start {
     // - a lifecycle (mount | unmount)
     // - an optional loading strategy (idle | media | visible)
     localComponents() {
+
+        // automatically load components with a custom strategy [data-component="myComponent" data-load="visible"]
+        this.componentLoader.load('localBridge', '[data-component]', 'eager');
+
+        // manually load local components
         this.componentLoader.load('share', '[data-share]', 'visible');
     }
 
@@ -57,6 +62,7 @@ export default class Start {
 
     // Vue SFCs
     vueComponents() {
-        this.componentLoader.load('vueBridge', '[data-vue-component]');
+        // automatically load vue SFCs [data-vue-component="myVueComponent" data-load="visible"]
+        this.componentLoader.load('vueBridge', '[data-vue-component]', 'eager');
     }
 }
