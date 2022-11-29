@@ -1,6 +1,6 @@
 import BaseComponent from '../../framework/baseComponent';
+import { loadStrategies } from '../../framework/loadStrategies';
 import { createApp } from 'vue'
-import * as strategies from '../../strategies/index.js';
 
 export default class VueBridge extends BaseComponent {
 
@@ -53,51 +53,11 @@ export default class VueBridge extends BaseComponent {
      * @param el
      */
     lazyload(el) {
-        let promises = [];
-        let strategy = el.dataset.load ?? null;
 
         // custom import strategies
-        if (strategy) {
-
-            // support multiple strategies separated by pipes
-            // e.g. "idle | visible | media (min-width: 1024px)"
-            let requirements = strategy
-                .split('|')
-                .map(requirement => requirement.trim())
-                .filter(requirement => requirement !== 'immediate')
-                .filter(requirement => requirement !== 'eager');
-
-            for (let requirement of requirements) {
-                // idle using requestIdleCallback
-                if (requirement === 'idle') {
-                    promises.push(
-                        strategies.idle()
-                    );
-                    continue;
-                }
-
-                // media query, pass the rule inside parentheses
-                // e.g."media (only screen and (min-width:768px))"
-                if (requirement.startsWith('media')) {
-                    promises.push(
-                        strategies.media(requirement)
-                    );
-                    continue;
-                }
-
-                // visible using intersectionObserver, optionally pass the
-                // root margins of the observed element inside parentheses
-                // e.g."visible (0px 0px 0px 0px)"
-                if (requirement.startsWith('visible')) {
-                    console.log('visible');
-                    // if element has a unique id, match that
-                    let selector = el.getAttribute('id') ? '#' + el.getAttribute('id') : '[data-vue-component="'+el.dataset.vueComponent+'"]';
-                    promises.push(
-                        strategies.visible(selector, requirement)
-                    );
-                }
-            }
-        }
+        let strategy = el.dataset.load ?? null;
+        let selector = el.getAttribute('id') ? '#' + el.getAttribute('id') : '[data-vue-component="'+el.dataset.vueComponent+'"]';
+        let promises = loadStrategies(strategy, selector);
 
         Promise.all(promises)
             .then(() => {
@@ -110,6 +70,7 @@ export default class VueBridge extends BaseComponent {
                     let app = createApp(vueComponent.default, { ...el.dataset });
                     app.mount(el);
                     this.vueInstances.push(app);
+                    console.log('mounted ' + el.id);
                 });
             });
     }
