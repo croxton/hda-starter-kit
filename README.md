@@ -93,7 +93,7 @@ This file controls which components you wish to load, and the selectors they map
 Global components are loaded once on initial page load. They manage the state of site-wide elements and behaviours like the main menu, `<head>` metadata and window resize events. Create global components in `framework/components/global`.
 
 #### `localComponents()`
-Vanilla JS components are loaded automatically on demand in content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom by passing the component’s name via the `data-component=""` attribute. Determine the loading strategy for the component instance with `data-load=""`.
+Vanilla JS components are loaded on demand in content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements with `data-component="myComponent"`. Determine the loading strategy for the component instance with `data-load=""`.
 
 The component can appear once or multiple times in your markup, with each instance respecting the loading strategy specified for the element it is mounted on. Regardless of the number of instances, the component's script (split into an individual chunk file by Webpack) will only be requested once - when the component is first encountered. 
 
@@ -106,7 +106,7 @@ For example, if you create a component class at `framework/components/local/myCo
 
 Each instance *must* have a unique ID.
 
-If the element contains markup that is manipulated by the component you have created, preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-component="carousel"]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel:
+If the element contains markup that is manipulated by the component you have created, preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-component="carousel"]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel: 
 
 ```html
 <div id="my-carousel" class="swiper" data-component="carousel" hx-history-preserve>
@@ -146,7 +146,7 @@ In your html:
 For instructions see [Async Alpine](https://github.com/Accudio/async-alpine).
 
 #### `vueComponents()`
-Vue components loaded on demand in content swapped by htmx, such as `<main>`. Create components in `framework/components/vue`, and attach to elements with `data-vue-component="MyComponent"`. Determine the loading strategy for the component with `data-load=""`, and pass props via additional `data-` attributes.
+Vue components are loaded on demand in content swapped by htmx, such as `<main>`. Create components in `framework/components/vue`, and attach to elements with `data-vue-component="MyComponent"`. Determine the loading strategy for the component with `data-load=""`, and pass props via additional `data-` attributes.
 
 No initialisation step is required for Vue components, they are loaded and mounted automatically on demand as individual Vue application instances.
 
