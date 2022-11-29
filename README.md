@@ -209,7 +209,7 @@ For communication *between* components, this kit comes with [PubSubJS](https://g
 Example use:
 
 ```js
-import Plyr from 'plyr';
+import PubSub from 'pubsub-js';
 
 // subscribe to 'video.play'
 let topic = 'video.play';
