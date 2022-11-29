@@ -204,7 +204,33 @@ this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-
 ```
 
 ### Event bus
-For communication *between* components, this kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library.
+For communication *between* components, this kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library. 
+
+Example use:
+
+```js
+// subscribe to 'video.play'
+let topic = 'video.play';
+this.playerSubscriber = PubSub.subscribe(topic, (msg, id) => {
+    if (id !== player.plyId) {
+        player.pause();
+    }
+});
+
+player.on('play', event => {
+    this.videoMount.classList.add('is-playing');
+    // pause any other videos mounted on the page that are playing
+    PubSub.publish(topic, player.plyId);
+});
+        
+```
+
+Be sure to unsubscribe to topics in `unmount()`:
+
+```js
+ // unsubscribe
+ PubSub.unsubscribe(this.playerSubscriber);
+```
 
 ### Creating your own local components
 
@@ -227,11 +253,10 @@ export default class MyThing extends BaseComponent {
     }
 
     mount() {
-        // setup and mount your component
-        let things = document.querySelectorAll(this.elm); // [data-thing]
-        things.forEach(element => {
-            // do stuff to each matching thing
-        });
+        // setup and mount your component instance
+        let thing = document.querySelector(this.elm); // [data-thing]
+      
+        // do stuff with the thing
     }
 
     unmount() {
@@ -242,12 +267,6 @@ export default class MyThing extends BaseComponent {
     }
 }
 ```
-
-`framework/start.js`:
-
-```js
-this.componentLoader.load('thing', '[data-thing]', 'visible');
-````
 
 ## Thank you
 Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
