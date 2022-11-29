@@ -209,9 +209,11 @@ For communication *between* components, this kit comes with [PubSubJS](https://g
 Example use:
 
 ```js
+import Plyr from 'plyr';
+
 // subscribe to 'video.play'
 let topic = 'video.play';
-this.playerSubscriber = PubSub.subscribe(topic, (msg, id) => {
+let subscriber = PubSub.subscribe(topic, (msg, id) => {
     if (id !== player.plyId) {
         player.pause();
     }
@@ -229,7 +231,7 @@ Be sure to unsubscribe to topics in `unmount()`:
 
 ```js
  // unsubscribe
- PubSub.unsubscribe(this.playerSubscriber);
+ PubSub.unsubscribe(subscriber);
 ```
 
 ### Creating your own local components
