@@ -49,8 +49,6 @@ export default class VideoPlayer extends BaseComponent {
 
     mount() {
 
-        console.log('do mount ' + this.videoMount.id);
-
         // lazy load videos entering the viewport
         let videoBtn = this.videoMount.querySelector('.c-video__btn');
         let video, track, srcWebm, srcMp4, srcVimeo, srcYoutube;

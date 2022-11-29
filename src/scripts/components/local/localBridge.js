@@ -46,8 +46,6 @@ export default class LocalBridge extends BaseComponent {
         let selector = el.getAttribute('id') ? '#' + el.getAttribute('id') : '[data-component="'+el.dataset.component+'"]';
         let promises = loadStrategies(strategy, selector);
 
-        console.log('lazyload ' + selector);
-
         Promise.all(promises)
             .then(() => {
                 // mount the component instance
@@ -56,7 +54,6 @@ export default class LocalBridge extends BaseComponent {
                     /* webpackChunkName: "components/local/[request]" */
                 '../local/' + el.dataset.component
                     ).then((lazyComponent) => {
-                        console.log('then ' + selector);
                         let app = new lazyComponent.default(selector);
                         app.mounted = true;
                         this.instances.push(app);

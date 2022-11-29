@@ -10,7 +10,6 @@ export default class Share extends BaseComponent {
     }
 
     mount() {
-        console.log('mount share');
         this.shares = document.querySelectorAll(`[data-share]`);
         this.shares.forEach(element => {
 

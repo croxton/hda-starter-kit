@@ -71,7 +71,6 @@ export default class VueBridge extends BaseComponent {
                     app.config.warnHandler = () => null;
                     app.mount(el);
                     this.vueInstances.push(app);
-                    console.log('mounted ' + el.id);
                 });
             });
     }
