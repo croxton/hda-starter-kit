@@ -93,29 +93,23 @@ This file controls which components you wish to load, and the selectors they map
 Global components are loaded once on initial page load. They manage the state of site-wide elements and behaviours like the main menu, `<head>` metadata and window resize events. Create global components in `framework/components/global`.
 
 #### `localComponents()`
-Vanilla JS components loaded on demand in any content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom, typically via a `data-` attribute selector. For example, a component matching the `[data-share]` selector that is loaded when it becomes visible in the viewport:
+Vanilla JS components are loaded automatically on demand in content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements in the dom by passing the component’s name via the `data-component=""` attribute. Determine the loading strategy for the component instance with `data-load=""`.
 
-In `start.js`:
+The component can appear once or multiple times in your markup, with each instance respecting the loading strategy specified for the element it is mounted on. Regardless of the number of instances, the component's script (split into an individual chunk file by Webpack) will only be requested once - when the component is first encountered. 
 
-```js
-this.componentLoader.load('share', '[data-share]', 'visible');
-````
-
-In your html:
+For example, if you create a component class at `framework/components/local/myComponent.js`, you can use it in your html like this:
 
 ```html
-<div
-  data-share="device facebook twitter linkedin"
-  data-share-label="Share on"
-  data-share-device="Share using device sharing"
-  data-share-url="https://mywebsite.com/page2.html">
-</div>
+<div id="a-unique-id" data-component="myComponent" data-load="visible"></div>
+<div id="another-unique-id" data-component="myComponent" data-load="media (min-width: 1024px)"></div>
 ```
 
-If the element contains markup that is manipulated by the component you have created, preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-carousel]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel:
+Each instance *must* have a unique ID.
+
+If the element contains markup that is manipulated by the component you have created, preserve the initial markup state for history restores by using the `hx-history-preserve` attribute. For example, a component matching the `[data-component="carousel"]` selector that uses [Swiper.js](https://swiperjs.com/) to generate a carousel:
 
 ```html
-<div class="swiper" data-carousel="gallery" hx-history-preserve>
+<div id="my-carousel" class="swiper" data-component="carousel" hx-history-preserve>
   <div class="swiper-wrapper">
     <div class="swiper-slide">Slide 1</div>
     <div class="swiper-slide">Slide 2</div>
@@ -123,6 +117,12 @@ If the element contains markup that is manipulated by the component you have cre
   </div>
   <div class="swiper-pagination"></div>
 </div>
+```
+
+It is also possible to manually load a specific component and attach to a selector in `start.js`. When the selector enters the dom, the component will be loaded and mounted using the selected strategy:
+
+```js
+this.componentLoader.load('share', '[data-share]', 'visible');
 ```
 
 #### `asyncAlpineComponents()`
