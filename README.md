@@ -66,12 +66,12 @@ View list of supported browsers for this project (see `package.json` to edit):
 
 ## Front-end development
 
-Our aim is to keep markup and logic (styling / scripting) together in one file, wherever possible, and this starter gives you some great tools to start with simply by editing html. Realistically however, this isn't always possible or desirable as the complexity of an application increases: sometimes we need units of behaviour or style to be separated as individual components that map to elements in the markup. Ideally, these components should be as self-contained and expressive as possible, so they remain as readable and composable.
+Our aim is to keep markup and logic (styling / scripting) together in one file, wherever possible, and this starter kit gives you some great tools to start with simply by editing html. Realistically however, this isn't always possible or desirable as the complexity of an application increases: sometimes we need units of behaviour or style to be separated as individual components that map to elements in the markup. Ideally, these components should be as self-contained and expressive as possible, so they remain readable and composable.
 
-This framework gives you the flexibility to find a pragmatic balance between Locality of Behaviour (LoB) and Separation of Concerns (SoC) that suits your project and preferences.
+This kit gives you the flexibility to find a pragmatic balance between Locality of Behaviour (LoB) and Separation of Concerns (SoC) that suits your project and preferences.
 
 ## Styling
-You may find you need to create bespoke styles for UI states that can't easily be expressed with Tailwind CSS classes. This starter allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
+You may need to create bespoke styles for UI states that can't easily be expressed with Tailwind CSS classes. This kit allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
 
 * **Settings** – global variables, config switches etc.
 * **Functions** – globally used functions.
@@ -84,10 +84,10 @@ You may find you need to create bespoke styles for UI states that can't easily b
 * **Utils** – utilities and helper classes with ability to override anything which goes before (e.g. `.h1`).
 
 ## Scripting
-`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may want to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This starter allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
+`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may need to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This kit allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
 
 ### `framework/start.js`
-This file controls which components you wish to load, and the selectors they map to.
+This file controls the components you wish to load, and the selectors they map to.
 
 ####  `globalComponents()`
 Global components are loaded once on initial page load. They manage the state of site-wide elements and behaviours like the main menu, `<head>` metadata and window resize events. Create global components in `framework/components/global`.
@@ -169,7 +169,7 @@ For more, see [Vue SFCs](https://vuejs.org/guide/scaling-up/sfc.html)
 Components support the following loading strategies. The loading strategy for local components is determined in `start.js`. Alpine components can use the `ax-load` attribute directly in the markup, and vue components can use the `data-load` attribute. The default strategy is `eager`.
 
 #### Eager
-The default strategy if not specified. If the component is present in the page on initial load, or in the content swapped into the page by htmx, it will be loaded and mounted immediately.
+The default strategy if not specified. If the component is present in the page on initial load, or in content swapped into the dom by htmx, it will be loaded and mounted immediately.
 
 #### Visible
 Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses.
@@ -203,8 +203,51 @@ Strategies can be combined by separating with a pipe |, allowing for advanced an
 this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-width: 1024px)');
 ```
 
+### Creating your own local components
+
+Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
+
+#### `mount()`
+Use this method to initialise your component. A component would typically map to one element and manipulate the markup within it. Use publish/subscribe topics if to orchestrate multiple component instances.
+
+#### `umount()`
+Use this method to remove any references to elements in the DOM so that the browser can perform garbage collection and release memory.
+Remove any event listeners and observers that you created. The framework automatically tracks event listeners added to elements and provides a convenience function `clearEventListeners()` that can clean things up for you.
+
+```html
+<div id="my-thing-1" data-component="myThing"></div>
+```
+
+`components/local/myThing.js`:
+
+```js
+import BaseComponent from '../../framework/baseComponent';
+
+export default class MyThing extends BaseComponent {
+    
+    constructor(elm) {
+        super(elm);
+        this.mount();
+    }
+
+    mount() {
+        // setup and mount your component instance
+        let thing = document.querySelector(this.elm); // [data-thing]
+      
+        // do stuff with the thing!
+    }
+
+    unmount() {
+        if (this.mounted) {
+          // unset references to DOM nodes
+          // and remove any event listeners or observers you created
+        }
+    }
+}
+```
+
 ### Event bus
-For communication *between* components, this kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library. 
+For communication *between* components, the kit comes with [PubSubJS](https://github.com/mroderick/PubSubJS), a topic-based publish/subscribe library.
 
 Example use:
 
@@ -232,42 +275,6 @@ Be sure to unsubscribe to topics in `unmount()`:
 ```js
  // unsubscribe
  PubSub.unsubscribe(subscriber);
-```
-
-### Creating your own local components
-
-Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
-
-```html
-<div data-thing></div>
-```
-
-`components/local/myThing.js`:
-
-```js
-import BaseComponent from '../../framework/baseComponent';
-
-export default class MyThing extends BaseComponent {
-    
-    constructor(elm) {
-        super(elm);
-        this.mount();
-    }
-
-    mount() {
-        // setup and mount your component instance
-        let thing = document.querySelector(this.elm); // [data-thing]
-      
-        // do stuff with the thing
-    }
-
-    unmount() {
-        if (this.mounted) {
-          // unset references to DOM nodes
-          // and remove any event listeners or observers you created
-        }
-    }
-}
 ```
 
 ## Thank you
