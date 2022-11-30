@@ -20,6 +20,16 @@ export function loadStrategies(strategy, selector) {
             .filter(requirement => requirement !== 'eager');
 
         for (let requirement of requirements) {
+
+            // event listener, pass the event inside parentheses
+            // e.g."event (htmx:afterSettle)"
+            if (requirement.startsWith('event')) {
+                promises.push(
+                    strategies.event(requirement)
+                );
+                continue;
+            }
+
             // idle using requestIdleCallback
             if (requirement === 'idle') {
                 promises.push(
@@ -33,6 +43,15 @@ export function loadStrategies(strategy, selector) {
             if (requirement.startsWith('media')) {
                 promises.push(
                     strategies.media(requirement)
+                );
+                continue;
+            }
+
+            // PubSub subscription, pass the topic inside parentheses
+            // e.g."subscribe (video.play)"
+            if (requirement.startsWith('subscribe')) {
+                promises.push(
+                    strategies.subscribe(requirement)
                 );
                 continue;
             }

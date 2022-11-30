@@ -66,12 +66,12 @@ View list of supported browsers for this project (see `package.json` to edit):
 
 ## Front-end development
 
-Our aim is to keep markup and logic (styling / scripting) together in one file, wherever possible, and this starter kit gives you some great tools to start with simply by editing html. Realistically however, this isn't always possible or desirable as the complexity of an application increases: sometimes we need units of behaviour or style to be separated as individual components that map to elements in the markup. Ideally, these components should be as self-contained and expressive as possible, so they remain readable and composable.
+Our aim is to keep markup and logic (styling / scripting) together in one file, wherever possible, and this starter kit gives you some great tools to start with simply by editing html. Realistically however, this isn’t always possible or desirable as the complexity of an application increases: sometimes we need units of behaviour or style to be separated as individual components that map to elements in the markup. Ideally, these components should be as self-contained and expressive as possible, so they remain readable and composable.
 
 This kit gives you the flexibility to find a pragmatic balance between Locality of Behaviour (LoB) and Separation of Concerns (SoC) that suits your project and preferences.
 
 ## Styling
-You may need to create bespoke styles for UI states that can't easily be expressed with Tailwind CSS classes. This kit allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
+You may need to create bespoke styles for UI states that can’t easily be expressed with Tailwind CSS classes. This kit allows you to organise these in a [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)-inspired folder hierarchy, and use [SASS](https://sass-lang.com/) as much or as little as you wish.
 
 * **Settings** – global variables, config switches etc.
 * **Functions** – globally used functions.
@@ -95,7 +95,7 @@ Global components are loaded once on initial page load. They manage the state of
 #### `localComponents()`
 Vanilla JS components are loaded on demand in content swapped into a target by htmx, such as `<main>`. Create local components in `framework/components/local` and attach to elements with `data-component="myComponent"`. Determine the loading strategy for the component instance with `data-load=""`.
 
-The component can appear once or multiple times in your markup, with each instance respecting the loading strategy specified for the element it is mounted on. Regardless of the number of instances, the component's script (split into an individual chunk file by Webpack) will only be requested once - when the component is first encountered. 
+The component can appear once or multiple times in your markup, with each instance respecting the loading strategy specified for the element it is mounted on. Regardless of the number of instances, the component’s script (split into an individual chunk file by Webpack) will only be requested once - when the component is first encountered. 
 
 For example, if you create a component class at `framework/components/local/myComponent.js`, you can use it in your html like this:
 
@@ -171,36 +171,53 @@ Components support the following loading strategies. The loading strategy for lo
 #### Eager
 The default strategy if not specified. If the component is present in the page on initial load, or in content swapped into the dom by htmx, it will be loaded and mounted immediately.
 
-#### Visible
-Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses.
+#### Event 
+Vanilla JS components and Vue components can listen for an event on `document.body` to be triggered before they are loaded. Pass the event name in parentheses.
 
-```js
-this.componentLoader.load('share', '[data-share]', 'visible (100px 100px 100px 100px)');
+```html
+<div id="my-thing-1" data-component="myThing" data-load="event (htmx:validation:validate)"></div>
+```
+
+Alpine async components have their own implementation of Event - see: https://async-alpine.dev/docs/strategies/#event.
+
+
+#### Idle
+Uses `requestIdleCallback` (where supported) to load when the main thread is less busy. Where `requestIdleCallback` isn’t supported (Safari) we use an arbitrary 200ms delay to allow the main thread to clear.
+
+Best used for components that aren’t critical to the initial paint/load.
+
+```html
+<div id="my-thing-1" data-component="myThing" data-load="idle"></div>
 ```
 
 #### Media
 The component will be loaded when the provided media query evaluates as true.
 
-```js
-this.componentLoader.load('share', '[data-share]', 'media (max-width: 820px)');
+```html
+<div id="my-thing-1" data-component="myThing" data-load="media (max-width: 820px)"></div>
 ```
 
-#### Idle
-Uses requestIdleCallback (where supported) to load when the main thread is less busy.
+#### Subscribe
+Vanilla JS components and Vue components can subscribe to a `PubSubJS` topic; when the topic is published the component will be loaded.
 
-```js
-this.componentLoader.load('share', '[data-share]', 'idle');
+Alpine Async components do not support `Subscribe`.
+
+```html
+<div id="my-thing-1" data-component="myThing" data-load="subscribe (video.button.clicked)"></div>
 ```
 
-#### Event
-Alpine async components only. The component won't be loaded until it receives the `async-alpine:load` event on window. Provide the id of the component in `detail.id`. See: https://async-alpine.dev/docs/strategies/#event.
- 
+#### Visible
+Uses IntersectionObserver to only load when the component is in view, similar to lazy-loading images. Optionally, custom root margins can be provided in parentheses.
+
+```html
+<div id="my-thing-1" data-component="myThing" data-load="visible (100px 100px 100px 100px)"></div>
+```
 
 #### Combined strategies
-Strategies can be combined by separating with a pipe |, allowing for advanced and complex code splitting:
+Strategies can be combined by separating with a pipe |, allowing for advanced and complex code splitting. All strategies must resolve to trigger loading of the component.
 
-```js
-this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-width: 1024px)');
+```html
+<div id="my-thing-1" data-component="myThing" data-load="idle | visible | media (min-width: 1024px)"></div>
 ```
 
 ### Creating your own local components
