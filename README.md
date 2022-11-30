@@ -84,7 +84,7 @@ You may need to create bespoke styles for UI states that can’t easily be expre
 * **Utils** – utilities and helper classes with ability to override anything which goes before (e.g. `.h1`).
 
 ## Scripting
-`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may need to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This kit allows you to use Alpine Async components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like GSAP in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
+`Alpine.js` allows you to express UI component behaviour directly in markup, but sometimes you may need to isolate behaviour in an individual component and load it asynchronously on demand rather than in one big script bundle up-front. This kit allows you to use Async Alpine components, Vue SFCs or roll your own vanilla JS components. The later can be used to load heavy third-party libraries like [GSAP](https://greensock.com/gsap/) in a memory-efficient manner, by wrapping them in a `mount()` / `unmount()` lifecycle.
 
 ### `framework/start.js`
 This file controls the components you wish to load, and the selectors they map to.
@@ -200,7 +200,7 @@ The component will be loaded when the provided media query evaluates as true.
 #### Subscribe
 Vanilla JS components and Vue components can subscribe to a `PubSubJS` topic; when the topic is published the component will be loaded.
 
-Alpine Async components do not support `Subscribe`.
+Async Alpine components do not support `Subscribe`.
 
 ```html
 <div id="my-thing-1" data-component="myThing" data-load="subscribe (video.button.clicked)"></div>
@@ -295,4 +295,9 @@ Be sure to unsubscribe to topics in `unmount()`:
 ```
 
 ## Thank you
-Inspired by [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config).
+
+Inspired by:
+
+* [Agency Webpack Mix Config](https://github.com/ben-rogerson/agency-webpack-mix-config)
+* [Gia](https://github.com/giantcz/gia)
+* [Async Alpine](https://github.com/Accudio/async-alpine)
