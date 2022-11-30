@@ -1,6 +1,6 @@
 # Hypermedia Driven Application starter kit
 
-A solid platform for front-end development, following the [Hypermedia Driven Application (HDA)](https://htmx.org/essays/hypermedia-driven-applications/) architecture and the [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) (LoB) principle.
+A solid platform for front-end development, following the [Hypermedia Driven Application (HDA)](https://htmx.org/essays/hypermedia-driven-applications/) architecture and the [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) (LoB) principle. Create highly interactive, SPA-like web apps without the overhead.
 
 Includes a working demo featuring full page transitions and example `Alpine.js`, `Vue 3` and vanilla JS components.
 
@@ -166,7 +166,7 @@ See `components/vue/LocationMap.js` for an example.
 For more, see [Vue SFCs](https://vuejs.org/guide/scaling-up/sfc.html)
 
 ### Loading strategies
-Components support the following loading strategies. The loading strategy for local components is determined in `start.js`. Alpine components can use the `ax-load` attribute directly in the markup, and vue components can use the `data-load` attribute. The default strategy is `eager`.
+Loading strategies allow you to load components asynchronously on demand instead of up-front, freeing up the main thread and speeding up page rendering. Alpine components use the `ax-load` attribute to specify the strategy, whereas vanilla JS and vue components use the `data-load` attribute.
 
 #### Eager
 The default strategy if not specified. If the component is present in the page on initial load, or in content swapped into the dom by htmx, it will be loaded and mounted immediately.
