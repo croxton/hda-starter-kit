@@ -205,10 +205,10 @@ this.componentLoader.load('share', '[data-share]', 'idle | visible | media (min-
 
 ### Creating your own local components
 
-Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example.
+Local component classes must extend `framework/baseComponent.js` and have `mount()` and `unmount()` methods. See `components/local/share.js` for an example. A component would typically map to one element and manipulate the markup within it. Use publish/subscribe topics to orchestrate multiple component instances.
 
 #### `mount()`
-Use this method to initialise your component. A component would typically map to one element and manipulate the markup within it. Use publish/subscribe topics if to orchestrate multiple component instances.
+Use this method to initialise your component. 
 
 #### `umount()`
 Use this method to remove any references to elements in the DOM so that the browser can perform garbage collection and release memory.
@@ -232,7 +232,7 @@ export default class MyThing extends BaseComponent {
 
     mount() {
         // setup and mount your component instance
-        let thing = document.querySelector(this.elm); // [data-thing]
+        let thing = document.querySelector(this.elm); // [data-component="thing"]
       
         // do stuff with the thing!
     }
