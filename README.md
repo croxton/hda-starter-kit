@@ -125,6 +125,24 @@ It is also possible to manually load a specific component and attach to a select
 this.componentLoader.load('share', '[data-share]', 'visible');
 ```
 
+#####  Note
+Htmx uses a 'swap amd settle' logic to enable CSS transitions between new and old content. From the docs:
+> When new content is received from a server, before the content is swapped in, the existing content of the page is examined for elements that match by the id attribute. If a match is found for an element in the new content, the attributes of the old content are copied onto the new element before the swap occurs. The new content is then swapped in, but with the old attribute values. Finally, the new attribute values are swapped in, after a "settle" delay (20ms by default)
+
+If your component adds attributes (e.g. classes) _to the element it is mounted on_ AND uses those classes to determine it's own state, you may find it won't initialise itself fully after a swap between two pages where the element IDs of the component are the same in the old and new content. In that case, put your component _inside_ another container. For example:
+
+```html
+<div id="my-carousel" data-component="carousel" hx-history-preserve>
+  <div class="swiper">
+     <div class="swiper-wrapper">
+       <div class="swiper-slide">Slide 1</div>
+       <div class="swiper-slide">Slide 2</div>
+       <div class="swiper-slide">Slide 3</div>
+     </div>
+     <div class="swiper-pagination"></div>
+  </div>
+</div>
+
 #### `asyncAlpineComponents()`
 Asynchronous Alpine components can be loaded anywhere in your markup. Create Alpine components in `framework/components/alpine`. See `components/alpine/message.js` for an example.
 
