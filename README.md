@@ -158,7 +158,7 @@ In your html:
   <div
     ax-load="visible"
     x-data="message('Component loaded with Async Alpine using the `visible` strategy')"
-    x-ignore
+    x-ignore>
   </div>
 ```
 
