@@ -29,7 +29,7 @@ export default class Share extends BaseComponent {
         const shareIndex = options.findIndex(option => { return option === 'device' });
         const shareData = {
             facebook: { url: 'https://www.facebook.com/share.php?u=' },
-            linkedin: { url: 'https://www.linkedin.com/shareArticle?mini=true&url' },
+            linkedin: { url: 'https://www.linkedin.com/sharing/share-offsite/?url=' },
             twitter: { url: 'https://www.twitter.com/share?url=' }
         }
 
