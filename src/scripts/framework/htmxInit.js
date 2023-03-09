@@ -38,16 +38,17 @@ export default class HtmxInit {
                     if (name === "htmx:beforeSwap") {
                         // Take a snapshot of the initial dom state of a page before it is rendered.
                         // This is called *before* htmx:beforeHistorySave, so we need to save the
-                        // snapshot for the *next* history save
+                        // snapshot for the *next* history save.
+
+                        // We'll capture ALL html returned in a swap, even if it is a fragment
                         let incomingDOM = new DOMParser().parseFromString(event.detail.xhr.response, "text/html");
-                        let historyElt = incomingDOM.querySelector(historyEltSelector);
-                        if (historyElt) {
-                            historySnapshotNext = historyElt.innerHTML;
+                        if (incomingDOM) {
+                            historySnapshotNext = incomingDOM.body.innerHTML;
                         }
                     }
 
                     if (name === "htmx:beforeHistorySave") {
-                        // Restore the pristine dom state of elements inside a container with attribute [hx-history-pristine]
+                        // Restore the pristine dom state of elements inside a container with attribute [hx-history-preserve]
                         // before htmx saves it to the history cache (localStorage)
                         if (historySnapshot) {
                             let markers = document.querySelectorAll(historyEltSelector + ' [hx-history-preserve]');
