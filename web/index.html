@@ -44,10 +44,10 @@
 
         <header>
             <h3 class="text-xl">Example Alpine.js component: accordion</h3>
-            <p class="mt-2">Use the <code class="bg-yellow-100 px-1 inline-block">hx-history-preserve</code> attribute on the root element of each Alpine.js component to preserve its initial markup state across swaps.</p>
+            <p class="mt-2">Use the <code class="bg-yellow-100 px-1 inline-block">hx-history-preserve</code> attribute and unique <code class="bg-yellow-100 px-1 inline-block">id</code> on the root element of each Alpine.js component to preserve its initial markup state across swaps.</p>
         </header>
 
-        <div hx-history-preserve class="container py-12" x-data="{
+        <div id="alpine-accordion" hx-history-preserve class="container py-12" x-data="{
             init() {
                 console.log('Here we go!')
             },
@@ -98,7 +98,7 @@
             <p class="mt-2">Always use inline directives over runtime declarations, for example use <code class="bg-yellow-100 px-1 inline-block">x‑data</code> over <code class="bg-yellow-100 px-1 inline-block">Alpine.data</code>.</p>
         </header>
 
-        <div hx-history-preserve x-data='{
+        <div id="alpine-search" hx-history-preserve x-data='{
             isOpen: false,
             search: "",
 

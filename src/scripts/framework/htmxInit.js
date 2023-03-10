@@ -18,61 +18,75 @@ export default class HtmxInit {
 
         (function () {
 
-            let historySnapshot, historySnapshotNext;
-            let historyEltSelector = '[hx-history-elt]';
+            let cache = {
+                now : {},
+                next : {}
+            };
+
+            function saveToCache(dom, store) {
+                let markers = dom.querySelectorAll('[hx-history-preserve]');
+                if (markers) {
+                    for (let i=0; i<markers.length; ++i) {
+                        if (typeof markers[i].id !== 'undefined') {
+                            cache[store][markers[i].id] = markers[i].outerHTML;
+                        }
+                    }
+                }
+            }
+
+            function restoreFromCache() {
+                // Replace elements with their original markup
+                for (let key in cache.now) {
+                    let el = document.getElementById(key);
+                    if (el) {
+                        el.outerHTML = cache.now[key];
+                    }
+                    el = null;
+                }
+                // Rotate cache, ready for the next history save
+                if (Object.keys(cache.next).length > 0) {
+                    cache.now = cache.next;
+                    cache.next = {};
+                } else {
+                    cache.now = {};
+                }
+            }
 
             htmx.defineExtension('history-preserve', {
 
                 init : function() {
-
-                    // Take a snapshot of the pristine markup on initial page load
-                    // before it had been manipulated by JS
-                    let historyElt = document.querySelector(historyEltSelector);
-                    if (historyElt) {
-                        historySnapshot = historyElt.innerHTML;
-                    }
+                    // On page load, cache the initial dom state of preserved
+                    // elements before they are manipulated by JS
+                    saveToCache(document, 'now');
                 },
 
                 onEvent : function(name, event) {
 
                     if (name === "htmx:beforeSwap") {
-                        // Take a snapshot of the initial dom state of a page before it is rendered.
-                        // This is called *before* htmx:beforeHistorySave, so we need to save the
-                        // snapshot for the *next* history save.
-
-                        // We'll capture ALL html returned in a swap, even if it is a fragment
+                        // On swap, save the initial dom state of any preserved
+                        // elements in the incoming DOM.
+                        // We won't need this until the *next* request that
+                        // triggers a history save
                         let incomingDOM = new DOMParser().parseFromString(event.detail.xhr.response, "text/html");
                         if (incomingDOM) {
-                            historySnapshotNext = incomingDOM.body.innerHTML;
+                            saveToCache(incomingDOM, 'next');
                         }
+                        incomingDOM = null;
                     }
 
                     if (name === "htmx:beforeHistorySave") {
-                        // Restore the pristine dom state of elements inside a container with attribute [hx-history-preserve]
-                        // before htmx saves it to the history cache (localStorage)
-                        if (historySnapshot) {
-                            let markers = document.querySelectorAll(historyEltSelector + ' [hx-history-preserve]');
-                            let pristineDom = new DOMParser().parseFromString(historySnapshot, "text/html");
-                            let replace = pristineDom.querySelectorAll('[hx-history-preserve]');
-                            for (let i = 0; i < markers.length; ++i) {
-                                if (replace[i] !== undefined) {
-                                    markers[i].innerHTML = replace[i].innerHTML;
-                                    markers[i].setAttribute('class', replace[i].getAttribute('class'));
-                                }
-                            }
-                            if (historySnapshotNext) {
-                                historySnapshot = historySnapshotNext;
-                            } else {
-                                historySnapshot = null;
-                            }
-                        }
+                        // Restore the pristine dom state of preserved elements
+                        // before htmx saves the page to the history cache
+                        restoreFromCache();
                     }
 
                     if (name === 'htmx:historyRestore') {
-                        // update the snapshot that will be saved
+                        // Update the cache of preserved elements that will be
+                        // restored on the next request that triggers a history save
                         let restored = event?.detail?.item?.content;
                         if (restored) {
-                            historySnapshot = restored;
+                            let restoredDOM = new DOMParser().parseFromString(restored, "text/html");
+                            saveToCache(restoredDOM, 'now');
                         }
                     }
                 }
