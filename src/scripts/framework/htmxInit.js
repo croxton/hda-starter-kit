@@ -86,7 +86,9 @@ export default class HtmxInit {
                         let restored = event?.detail?.item?.content;
                         if (restored) {
                             let restoredDOM = new DOMParser().parseFromString(restored, "text/html");
-                            saveToCache(restoredDOM, 'now');
+                            if (restoredDOM) {
+                                saveToCache(restoredDOM, 'now');
+                            }
                         }
                     }
                 }
