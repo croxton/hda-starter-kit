@@ -1,5 +1,9 @@
 # Hypermedia Driven Application starter kit
 
+
+💡Use Craft CMS? Check out the [Craft + Vite flavoured version](https://github.com/croxton/craftcms-hda-starter-kit) of this kit.
+
+## Overview 
 A solid platform for front-end development, following the [Hypermedia Driven Application (HDA)](https://htmx.org/essays/hypermedia-driven-applications/) architecture and the [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/) (LoB) principle. Create highly interactive, SPA-like web apps without the overhead.
 
 Includes a working demo featuring full page transitions and example `Alpine.js`, `Vue 3` and vanilla JS components.
