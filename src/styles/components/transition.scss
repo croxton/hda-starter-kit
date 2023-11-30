@@ -10,16 +10,16 @@
   bottom:0;
   left:0;
   opacity:0;
+  pointer-events: none;
   position:fixed;
   right:0;
   top:0;
-  transition-duration:400ms;
   transition-delay:300ms; // delays fade out
+  transition-duration:400ms;
   transition-property:visibility,opacity;
   transition-timing-function:cubic-bezier(.19,1,.22,1);
   visibility:hidden;
   z-index:999;
-  pointer-events: none;
   // If you want to fade out/in the page between transitions:
   //background-color:#fff;
 }
@@ -35,8 +35,8 @@
 .htmx-settling .c-transition,
 .htmx-swapping .c-transition {
   opacity:1;
-  visibility:visible;
   transition-delay:0s;
+  visibility:visible;
 }
 
 .c-transition::after{
