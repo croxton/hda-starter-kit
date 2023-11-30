@@ -16,6 +16,7 @@ export default class HtmxInit {
         //}
         //htmx.logAll();
 
+        // hx-history-preserve extension
         (function () {
 
             let cache = {
@@ -34,21 +35,25 @@ export default class HtmxInit {
                 }
             }
 
-            function restoreFromCache() {
-                // Replace elements with their original markup
+            function rotateCache() {
+                // prune cache of any markers not found in current document
+                let prunedCache = {};
                 for (let key in cache.now) {
                     let el = document.getElementById(key);
                     if (el) {
-                        el.outerHTML = cache.now[key];
+                        prunedCache[key] = cache.now[key];
                     }
                     el = null;
                 }
-                // Rotate cache, ready for the next history save
+                cache.now = prunedCache;
+
+                // Merge incoming cache, ready for the next history save
                 if (Object.keys(cache.next).length > 0) {
-                    cache.now = cache.next;
+                    cache.now = {
+                        ...cache.now,
+                        ...cache.next
+                    };
                     cache.next = {};
-                } else {
-                    cache.now = {};
                 }
             }
 
@@ -74,10 +79,23 @@ export default class HtmxInit {
                         incomingDOM = null;
                     }
 
-                    if (name === "htmx:beforeHistorySave") {
-                        // Restore the pristine dom state of preserved elements
-                        // before htmx saves the page to the history cache
-                        restoreFromCache();
+                    if (name === "htmx:historyItemCreated") {
+                        if (event.detail.item.content) {
+                            // Overwrite content with our restored markup
+                            // *before* it is saved to the history cache...
+                            let cachedDOM = new DOMParser().parseFromString(event.detail.item.content, "text/html");
+                            for (let key in cache.now) {
+                                let el = cachedDOM.getElementById(key);
+                                if (el) {
+                                    el.outerHTML = cache.now[key];
+                                }
+                                el = null;
+                            }
+                            event.detail.item.content = cachedDOM.body.innerHTML;
+
+                            // Rotate cache for next time
+                            rotateCache();
+                        }
                     }
 
                     if (name === 'htmx:historyRestore') {
@@ -97,14 +115,38 @@ export default class HtmxInit {
 
         // handle response error
         htmx.on('htmx:responseError', (event) => {
-            // hard redirect to final path
-            window.location.href=event.detail.pathInfo.finalPath;
+            // hard redirect to final path, to let Craft handle it
+            let path = event.detail.pathInfo.finalRequestPath ?? event.detail.pathInfo.finalPath ?? null;
+            if (path) {
+                try {
+                    let redirectUrl = new URL(path);
+                    if (redirectUrl) {
+                        if (redirectUrl.origin === window.location.origin) {
+                            window.location.href = path;
+                        }
+                    }
+                } catch (e) {
+                    // ignore
+                }
+            }
         });
 
         // handle swap error
         htmx.on('htmx:swapError', (event) => {
-            // hard redirect to final path
-            window.location.href=event.detail.pathInfo.finalPath;
+            // hard redirect to final path, to let Craft handle it
+            let path = event.detail.pathInfo.finalRequestPath ?? event.detail.pathInfo.finalPath ?? null;
+            if (path) {
+                try {
+                    let redirectUrl = new URL(path);
+                    if (redirectUrl) {
+                        if (redirectUrl.origin === window.location.origin) {
+                            window.location.href = path;
+                        }
+                    }
+                } catch (e) {
+                    // ignore
+                }
+            }
         });
 
         // This extension adds the X-Requested-With header to requests with the value "XMLHttpRequest".

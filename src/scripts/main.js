@@ -10,7 +10,7 @@
  */
 
 /* import framework */
-import geteventlisteners from "./framework/geteventlisteners";
+import "./framework/getEventListeners";
 import HtmxInit from './framework/htmxInit';
 import Start from './framework/start';
 
@@ -24,7 +24,7 @@ if (typeof htmx != "undefined") {
 }
 
 // Bootstrap our js framework
-const start = new Start();
+new Start();
 
 // Accept HMR
 // https://webpack.js.org/api/hot-module-replacement#accept

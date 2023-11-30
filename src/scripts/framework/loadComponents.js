@@ -11,11 +11,13 @@ export default class LoadComponents {
 
     constructor() {
         htmx.on('htmx:afterSwap', (htmxEvent) => {
+            htmx.config.currentTargetId = htmxEvent.target.id;
             for (const [key, entry] of Object.entries(this.registered)) {
                 this.lifeCycle(entry);
             }
         });
         htmx.on('htmx:historyRestore', (htmxEvent) => {
+            htmx.config.currentTargetId = null;
             for (const [key, entry] of Object.entries(this.registered)) {
                 this.lifeCycle(entry);
             }
@@ -35,7 +37,7 @@ export default class LoadComponents {
                 // mount/unmount as necessary if found in DOM
                 if (document.querySelector(entry.selector)) {
                     if (this.loaded[entry.component].mounted) {
-                        this.loaded[entry.component].remount();
+                        this.loaded[entry.component].refresh();
                     } else {
                         this.loaded[entry.component].restoreFromCache();
                         this.loaded[entry.component].mount();

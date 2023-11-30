@@ -6,8 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="application-name" content="HDA" data-revision="1" data-locale="en">
     <link rel="stylesheet" type="text/css" href="/dist/main.css">
-    <script defer src="https://cdn.jsdelivr.net/gh/bigskysoftware/htmx@508490/src/htmx.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/bigskysoftware/htmx/src/htmx.min.js"></script>
     <script defer src="/dist/manifest.js"></script>
     <script defer src="/dist/vendor.js"></script>
     <script defer src="/dist/main.js"></script>
@@ -281,6 +282,17 @@
     </section>
 
 </main>
+
+<!-- Revision prompt -->
+<div class="c-rev fixed z-50 top-0 left-0 w-full h-full justify-center items-center bg-black bg-opacity-50">
+    <form class="text-center p-12 bg-white shadow-lg" action="" method="post">
+        <p class="mb-4">A new version of this website is available.</p>
+        <button class="text-sm md:text-base inline-block rounded-full px-4 py-1.5 md:px-6 md:py-2.5 border transition-colors bg-red-500 text-white" type="submit">Refresh page</button>
+    </form>
+</div>
+
+<!-- Utilities -->
+<div id="measure-vh" style="height:100vh;width:0;position:fixed;z-index:-1"></div>
 
 <!-- page transition loading bar -->
 <div id="transition" class="c-transition"></div>

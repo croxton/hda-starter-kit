@@ -3,7 +3,7 @@ import { loadStrategies } from '../../framework/loadStrategies';
 
 export default class LocalBridge extends BaseComponent {
 
-    instances = [];
+    loaded = [];
 
     constructor(element) {
         super(element);
@@ -11,26 +11,36 @@ export default class LocalBridge extends BaseComponent {
     }
 
     mount() {
+        // Create a new instance for component placeholders
+        // found in the swap target only, allowing components in parts of the
+        // page *outside* the swap target to remain unchanged.
+        let targetId = htmx.config.currentTargetId ?? 'main'; // default
+        let target = document.getElementById(targetId);
+        let components = target.querySelectorAll(this.elm);
 
-        // We'll create a new instance for each of the component placeholders in the page
-        const components = document.querySelectorAll(this.elm);
         for(let el of components) {
-
             // load on demand
             this.lazyload(el);
         }
+        target = null;
+        components = null;
     }
 
     unmount() {
         if (this.mounted) {
-            // remove instances to release memory
-            this.instances.forEach( (instance) =>{
-                instance.unmount();
-            });
-
-            // reset references to allow memory to be reclaimed
-            this.instances.length = 0;
-            this.instances = [];
+            let targetId = htmx.config.currentTargetId ?? 'main'; // default
+            let target = document.getElementById(targetId);
+            for (let i = this.loaded.length - 1; i >= 0; i--) {
+                // 1. unmount if it IS in the swap target (it will be re-mounted)
+                // 2. unmount if it IS NOT in the document at all
+                let inTarget = target.querySelector(this.loaded[i].selector);
+                let inDocument = document.querySelector(this.loaded[i].selector);
+                if (inTarget || !inDocument) {
+                    this.loaded[i].instance.unmount();
+                    this.loaded.splice(i, 1); // remove from array
+                }
+            }
+            target = null;
         }
     }
 
@@ -50,13 +60,15 @@ export default class LocalBridge extends BaseComponent {
             .then(() => {
                 // mount the component instance
                 import(
-                    /* webpackMode: "lazy" */
-                    /* webpackChunkName: "components/local/[request]" */
-                '../local/' + el.dataset.component
+                    `../local/${el.dataset.component}.js`
                     ).then((lazyComponent) => {
-                        let app = new lazyComponent.default(selector);
-                        app.mounted = true;
-                        this.instances.push(app);
+                    let instance = new lazyComponent.default(selector);
+                    instance.mounted = true;
+                    this.loaded.push({
+                        name:el.dataset.component,
+                        selector: selector,
+                        instance: instance
+                    });
                 });
             });
     }

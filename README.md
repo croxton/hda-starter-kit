@@ -105,7 +105,7 @@ For example, if you create a component class at `framework/components/local/myCo
 
 ```html
 <div id="a-unique-id" data-component="myComponent" data-load="visible"></div>
-<div id="another-unique-id" data-component="myComponent" data-load="media (min-width: 1024px)"></div>
+<div id="another-unique-id" data-component="myComponent" data-load="media (min-width: 1024px)" data-options='{"option1":"value1", "option2":"value2"}'></div>
 ```
 
 Each instance *must* have a unique ID.
@@ -123,10 +123,10 @@ If the element contains markup that is manipulated by the component you have cre
 </div>
 ```
 
-It is also possible to manually load a specific component and attach to a selector in `start.js`. When the selector enters the dom, the component will be loaded and mounted using the selected strategy:
+It is also possible to manually load a component and attach it to a selector in `start.js`. When the selector enters the dom, the component will be loaded and mounted using the selected strategy. Manual loading is only recommended for components that coordinate the behaviour of _multiple_ elements using Observers (e.g. [sal.js](https://mciastek.github.io/sal/)).
 
 ```js
-this.componentLoader.load('share', '[data-share]', 'visible');
+this.componentLoader.load('sal', '[data-sal]', 'eager');
 ```
 
 #####  Important note
@@ -176,13 +176,15 @@ No initialisation step is required for Vue components, they are loaded and mount
 See `components/vue/LocationMap.js` for an example.
 
 ```html
-<div 
-  id="map-london" 
-  data-vue-component="LocationMap" 
-  data-load="visible" 
-  data-latitude="51.509865" 
-  data-longitude="-0.118092" 
-  data-caption="A map of London">
+<div
+  id="map-london"
+  data-vue-component="LocationMap"
+  data-load="visible"
+  data-options='{
+    "latitude": "51.509865", 
+    "longitude": "-0.118092", 
+    "caption": "A map of London"
+  }'>
 </div>
  ```
 
@@ -255,7 +257,7 @@ Use this method to remove any references to elements in the DOM so that the brow
 Remove any event listeners and observers that you created. The framework automatically tracks event listeners added to elements and provides a convenience function `clearEventListeners()` that can clean things up for you.
 
 ```html
-<div id="my-thing-1" data-component="myThing"></div>
+<div id="my-thing-1" data-component="myThing" data-options='{"message":"Hello!"}'></div>
 ```
 
 `components/local/myThing.js`:
@@ -264,25 +266,49 @@ Remove any event listeners and observers that you created. The framework automat
 import BaseComponent from '../../framework/baseComponent';
 
 export default class MyThing extends BaseComponent {
-    
-    constructor(elm) {
-        super(elm);
-        this.mount();
-    }
 
-    mount() {
-        // setup and mount your component instance
-        let thing = document.querySelector(this.elm); // [data-component="thing"]
-      
-        // do stuff with the thing!
-    }
+  thing;
+  thingObserver;
 
-    unmount() {
-        if (this.mounted) {
-          // unset references to DOM nodes
-          // and remove any event listeners or observers you created
-        }
+  constructor(elm) {
+    super(elm);
+
+    // default options here are merged with those set on the element
+    // with data-options='{"option1":"value1"}'
+    this.options = {
+      message: "Hi, I'm thing",
+    };
+
+    this.mount();
+  }
+
+  mount() {
+    // setup and mount your component instance
+    this.thing = document.querySelector(this.elm); // [data-component="thing"]
+
+    // do amazing things...
+    this.thing.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log(this.options.message); // "Hello!"
+    });
+
+    this.thingObserver = new IntersectionObserver(...);
+
+  }
+
+  unmount() {
+    if (this.mounted) {
+      // remove any event listeners you created
+      this.thing.clearEventListeners();
+
+      // remove any observers you connected
+      this.thingObserver.disconnect();
+      this.thingObserver = null;
+
+      // unset any references to DOM nodes
+      this.thing = null;
     }
+  }
 }
 ```
 

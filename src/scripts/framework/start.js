@@ -13,7 +13,8 @@ import Alpine from 'alpinejs'
 import LazysizesInit from '../components/global/lazysizesInit';
 import Menu from '../components/global/menu';
 import Metadata from '../components/global/metadata';
-import ResizeDone from '../components/global/resizeDone';
+import Revision from '../components/global/revision';
+import Viewport from '../components/global/viewport';
 import SvgIconSprite from '../components/global/svgIconSprite';
 
 export default class Start {
@@ -35,7 +36,8 @@ export default class Start {
         new LazysizesInit();
         new Menu();
         new Metadata();
-        new ResizeDone();
+        new Revision();
+        new Viewport();
         new SvgIconSprite();
     }
 
@@ -47,8 +49,8 @@ export default class Start {
         // automatically load components with a custom strategy [data-component="myComponent" data-load="visible"]
         this.componentLoader.load('localBridge', '[data-component]', 'eager');
 
-        // manually load local components
-        this.componentLoader.load('share', '[data-share]', 'visible');
+        // manually load local components, e.g.:
+        // this.componentLoader.load('sal', '[data-sal]', 'visible');
     }
 
     // Asynchronous Alpine components

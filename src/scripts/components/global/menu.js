@@ -18,11 +18,6 @@ class Menu {
             self.manageMenuState(menuButtons, String(htmxEvent.detail.path));
         });
 
-        // Page swapping - update the menu state
-        htmx.on('htmx:beforeSwap', (htmxEvent) => {
-            self.manageMenuState(menuButtons, String(htmxEvent.detail.path));
-        });
-
         // initial state
         self.manageMenuState(menuButtons, window.location.href);
     }

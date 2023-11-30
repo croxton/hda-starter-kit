@@ -21,11 +21,22 @@ export default class BaseComponent {
     }
 
     set options(defaults) {
+        let options = {};
+        if (this.elm) {
+            let mount = document.querySelector(this.elm);
+            if (mount) {
+                let optionsFromAttribute = mount.getAttribute('data-options');
+                if (optionsFromAttribute) {
+                    options = JSON.parse(optionsFromAttribute);
+                }
+                mount = null;
+            }
+        }
         this._options = {
             ...this._options,
-            ...defaults
+            ...defaults,
+            ...options,
         };
-        return this._options;
     }
 
     // Create an instance of the component and associate it with a DOM node
@@ -34,15 +45,16 @@ export default class BaseComponent {
     // Destroy the component instance and do any garbage collection to release memory
     unmount() {}
 
-    // Triggered when the DOM mutates (e.g. new HTML injected)
-    update() {}
-
-    remount() {
+    // By default, we'll "refresh" the component by destroying and re-mounting it
+    // Components can override this behaviour, if they are able to update themselves
+    refresh() {
         this.unmount();
         this.restoreFromCache();
         this.mount();
     }
 
+    // Components can optionally store the initial markup state of html they wrap,
+    // and restore it to the original state before re-mounting
     restoreFromCache() {
         for (let key in this.cache) {
             if (this.cache.hasOwnProperty(key)) {
