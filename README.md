@@ -169,7 +169,7 @@ In your html:
 For instructions see [Async Alpine](https://github.com/Accudio/async-alpine).
 
 #### `vueComponents()`
-Vue components are loaded on demand in content swapped by htmx, such as `<main>`. Create components in `framework/components/vue`, and attach to elements with `data-vue-component="MyComponent"`. Determine the loading strategy for the component with `data-load=""`, and pass props via additional `data-` attributes.
+Vue components are loaded on demand in content swapped by htmx, such as `<main>`. Create components in `framework/components/vue`, and attach to elements with `data-vue-component="MyComponent"`. Determine the loading strategy for the component with `data-load=""`, and pass props via the `data-options=""` attribute (which accepts any valid JSON string).
 
 No initialisation step is required for Vue components, they are loaded and mounted automatically on demand as individual Vue application instances.
 
