@@ -1,6 +1,6 @@
 {
   "name": "hda-starter-kit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Hypermedia Driven Application starter kit",
   "main": "tailwind.config.js",
   "scripts": {
@@ -65,7 +65,8 @@
   },
   "overrides": {
     "svg-baker": {
-      "postcss": "8.4.31"
+      "postcss": "8.4.31",
+      "micromatch": "4.0.8"
     }
   },
   "browserslist": [
