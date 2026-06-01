@@ -42,8 +42,8 @@
     "laravel-mix-make-file-hash": "^2.2.0",
     "laravel-mix-polyfill": "^3.0.1",
     "laravel-mix-svg-sprite": "^2.0.0",
-    "npm": "^10.2.4",
-    "postcss": "^8.4.31",
+    "npm": "^11.16.0",
+    "postcss": "^8.5.15",
     "postcss-preset-env": "^9.3.0",
     "rimraf": "^5.0.5",
     "sass": "^1.55.0",
@@ -54,7 +54,8 @@
     "stylelint-scss": "^5.3.1",
     "tailwindcss": "^3.3.5",
     "vue": "^3.3.9",
-    "vue-loader": "^17.3.1"
+    "vue-loader": "^17.3.1",
+    "webpack": "5.93.0"
   },
   "dependencies": {
     "alpinejs": "^3.13.3",
@@ -65,9 +66,18 @@
   },
   "overrides": {
     "svg-baker": {
-      "postcss": "8.4.31",
+      "postcss": "8.5.15",
       "micromatch": "4.0.8"
+    },
+    "sockjs": {
+      "uuid": "11.1.1"
+    },
+    "node-notifier": {
+      "uuid": "11.1.1"
     }
+  },
+  "resolutions": {
+    "webpack": "5.93.0"
   },
   "browserslist": [
     "> 0.5%",

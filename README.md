@@ -28,7 +28,7 @@ Includes a working demo featuring full page transitions and example `Alpine.js`,
 
 ## Requirements
 
-Node 16+
+Node 20+
 
 ## Install
 
